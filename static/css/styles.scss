@@ -1,0 +1,180 @@
+$basefont: Helvetica, Arial, sans-serif;
+
+@mixin bw {
+	// TODO add browser decl
+	-moz-filter: grayscale(50%);
+	-webkit-filter: grayscale(50%);
+	filter: grayscale(50%);
+}
+
+@mixin opacity($val) {
+	// TODO add browser declarations
+	opacity: $val;
+	-moz-opacity: $val;
+	-webkit-opacity: $val;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+}
+
+a, a:visited {
+	color: red;
+}
+
+.header {
+	width: 100%;
+
+	a, a:visited {
+		color: #000;
+		text-decoration: none;
+	}
+}
+
+.my_stats {
+	text-align: right;
+	font-weight: 300;
+	padding: 10px 20px 0 0;
+	margin: 0;
+}
+
+.content {
+	padding: 10px 20px;
+	font-family: $basefont;
+	font-weight: 300;
+}
+
+.main {
+	width: 100%;
+	min-height: 400px;
+}
+
+.info {
+	font-size: 2.5em;
+	line-height: 2em;
+	font-weight: 300;
+}
+
+.instagram {
+	display: inline-block;
+	width: 200px;
+	height: 29px;
+	position: relative;
+	top: 5px;
+	background: url('/static/img/Instagram_normal.png');
+
+	&:hover {
+		background: url('/static/img/Instagram_hover.png');
+	}
+}
+
+.existing_pics {
+	li {
+		width: 206px;
+		height: 206px;
+		margin-top: 20px;
+		margin-right: 40px;
+		float: left;
+		@include opacity(0.4);
+
+		img {
+			width: 206px;
+			height: 206px;
+		}
+	}
+
+	list-style: none;
+	padding: 0 0 40px 0;
+	margin: 0;
+}
+
+.push {
+	display: none;
+	text-align: center;
+	font-weight: 300;
+	font-size: 2.3em;
+}
+
+.battle_wrap {
+	width: 100%;
+}
+
+.pic1_col, .pic2_col, .user1_col, .user2_col {
+	text-align: center;
+	font-size: 1.8em;
+}
+
+.skip_col {
+	text-align: center;
+	font-size: 1.4em;
+	position: relative;
+	top: -50px;
+}
+
+.skip, .skip:visited {
+	display: block;
+	width: 60px;
+	background: #000;
+	color: #fff;
+	padding: 10px;
+	margin: 30px auto;
+	&:hover {
+		background: #fff;
+		color: #000;
+		border: 1px solid #000;
+	}
+}
+
+.title {
+	text-align: center;
+}
+
+.col-2-5 {
+	width: 400px;
+	display: inline-block;
+}
+
+.col-1-5 {
+	width: 100px;
+	display: inline-block;
+}
+
+.row {
+	margin: 10px auto;
+	max-width: 950px;
+}
+
+.footer {
+	width: 100%;
+	background: #272727;
+	clear: both;
+	margin: 100px 0 0 0;
+}
+
+$footer_fontsize: 2em;
+
+.brief {
+	color: #fff;
+	font-size: $footer_fontsize;
+	line-height: 1.8em;
+}
+
+.leaderboard_g {
+	color: #fff;
+	font-size: $footer_fontsize;
+	line-height: 1.8em;
+}
+
+.leaders {
+	color: #7AE4F5;
+}
+
+.copyright {
+	font-size: 0.9em;
+	color: #fff;
+}

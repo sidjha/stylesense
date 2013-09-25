@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Join Stylesense</title>
+	<link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+
+<body>
+	<div class="header content">
+		<a href="/">Stylesense</a>
+		<h3 class="my_stats">{{user.username}}: 5 wins / 4 losses</h3>
+	</div>
+	<div class="main">
+		<div class="content">
+			<p class="info">
+				Thanks {{user.username}}. Here's how it works:
+			</p>
+			<p class="info">
+				When you post your next #ootd on instagram, we'll automatically push it into the battleground. Or if you want to get in a little earlier, pick a past instagram:
+			</p>
+
+			<h3 class="push"><span class="selected_count"></span>. <a href="#">Push to battleground</a></h3>
+			<ul class="existing_pics">
+
+			</ul>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="content">
+			<p class="brief">Stylesense is a battleground of #ootd pics for the instagram community. </p>
+			<p class="leaderboard_g">Who's winning: <span class="leaders">@kimk (42w / 5l), @rihanna (38w / 6l), @miley (22w / 10l)</span></p>
+			<p class="copyright">&copy; 2013 Stylesen.se. Handcrafted in Canada by <a href="http://twitter.com/aam1r">@aam1r</a> and <a href="http://twitter.com/sidjha">@sidjha</a>.</p>
+		</div>
+	</div>
+
+	<script>
+		var user = {{user|tojson|safe}};
+		console.log(user);
+
+		access_params = {
+			'access_token': user.token
+		}; 
+
+		$.getJSON('https://api.instagram.com/v1/users/' + user.user_id + '/media/recent?callback=?&count=' + 30, access_params, onDataLoaded);
+
+		function onDataLoaded(data) {
+			photos = data.data;
+			console.log(photos);
+
+			for(var i=0; i < photos.length; i++) {
+				var img_url = photos[i].images.low_resolution.url;
+				var obj_id = photos[i].id;
+				$('.existing_pics').append('<li data-id="' + obj_id + '"><img src="' + img_url + '"></li>');
+			}
+		}
+
+		var selectedCount = 0;
+		$('.existing_pics').on('click', 'li', function() {
+			if ($(this).attr('data-selected') == 'true') {
+				$(this).attr('data-selected', 'false');
+				$(this).css('opacity', '0.4');
+				selectedCount--;
+			} else {
+				$(this).attr('data-selected', 'true');
+				$(this).css('opacity', '1');
+				selectedCount++;
+			}
+			updateCount();
+		});
+
+		function updateCount() {
+			if (selectedCount == 0) {
+				$('.push').css('display', 'none');
+			} else {
+				$('.selected_count').html(selectedCount + " photos selected");
+				$('.push').css('display', 'block');
+			}
+		}
+	</script>
+</body>
+
+</html>
