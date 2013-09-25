@@ -4,8 +4,12 @@ app = Flask(__name__)
 
 CLIENT_ID = '77bdd37f87264ebea8c9a3178c9abd20'
 CLIENT_SECRET = 'c0b4cfe4fb6949848bb8c022c164a369'
+
+CLIENT_ID_DEV = 'c8a33444e0a94c71863c02b88a075b73'
+CLIENT_SECRET_DEV = '9b1b648a13b649be9a65f82a8c307278'
+
 REDIRECT_URI_DEV = 'http://127.0.0.1:5000/igram_oauth_callback'
-REDIRECT_URI_PROD = 'http://something.herokuapp.com/igram_oauth_callback'
+REDIRECT_URI_PROD = 'http://desolate-woodland-8107.herokuapp.com/igram_oauth_callback'
 GRANT_TYPE = 'authorization_code'
 
 app.secret_key = 'some_random_secret'
