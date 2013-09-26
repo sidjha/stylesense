@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, json, url_for, redirect, session
-import urllib, urllib2
+import urllib, urllib2, os
 app = Flask(__name__)
 
 CLIENT_ID = '77bdd37f87264ebea8c9a3178c9abd20'
@@ -51,5 +51,6 @@ def logged_in():
     return render_template('join.html', user=session['user'])
 
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
     app.debug = True
-    app.run()
+    app.run(host='0.0.0.0', port=port)
