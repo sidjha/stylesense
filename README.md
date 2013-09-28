@@ -1,4 +1,4 @@
 stylesense
 ==========
 
-Stylesense
+Stylesense codebase
