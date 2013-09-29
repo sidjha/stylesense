@@ -13,14 +13,22 @@ class Parse:
     register(PARSE_APPLICATION_ID, PARSE_REST_API_KEY)
 
 
+# Stores rating information
+class Rating(Object):
+  pass
+
+
 # Stores image data retrieved from Instagram
 class Media(Object):
-  def __init__(self, details):
+  def update_parameters(details):
     for k, v in details.items():
       v = self._serialize_data(k, v)
       setattr(self, k, v)
 
   def exists(self):
+    if not hasattr(self, 'instagramId'):
+      return False
+
     connection = httplib.HTTPSConnection('api.parse.com', 443)
     params = urllib.urlencode({"where":json.dumps({
           "instagramId": self.instagramId
@@ -33,7 +41,6 @@ class Media(Object):
 
     result = json.loads(connection.getresponse().read())
     return len(result['results']) > 0
-
 
   def save(self):
     exists = self.exists()

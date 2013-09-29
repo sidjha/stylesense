@@ -4,7 +4,7 @@ from parse import Media, Parse
 
 import time
 
-POLL_DELAY = 5 # in seconds
+POLL_DELAY = 60 # in seconds
 FOLLOWER_THRESHOLD = 200
 
 api = None
@@ -32,22 +32,21 @@ def poll():
   for obj in recent_media:
     obj = preprocess_obj(obj)
 
-    details = {'caption': obj.caption,
-               'commentCount': obj.comment_count,
-               'comments': obj.comments,
-               'filter': obj.filter,
-               'followers': obj.followers,
-               'images': obj.images,
-               'instagramId': obj.id,
-               'likeCount': obj.like_count,
-               'likes': obj.likes,
-               'link': obj.link,
-               'standardResolutionUrl': obj.get_standard_resolution_url(),
-               'tags': obj.tags,
-               'uploadTime': obj.created_time,
-               'userId': obj.user.id }
-
-    media = Media(details)
+    media = Media()
+    media.update_parameters({'caption': obj.caption,
+                             'commentCount': obj.comment_count,
+                             'comments': obj.comments,
+                             'filterName': obj.filter,
+                             'followers': obj.followers,
+                             'images': obj.images,
+                             'instagramId': obj.id,
+                             'likeCount': obj.like_count,
+                             'likes': obj.likes,
+                             'link': obj.link,
+                             'standardResolutionUrl': obj.get_standard_resolution_url(),
+                             'tags': obj.tags,
+                             'mediaCreatedTime': obj.created_time,
+                             'userId': obj.user.id })
 
     if media.followers < FOLLOWER_THRESHOLD:
       continue
