@@ -1,81 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Join Stylesense</title>
-	<link rel="stylesheet" href="/static/css/styles.css" type="text/css">
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <title>Join Stylesense</title>
+  <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </head>
 
 <body>
-	<div class="header content">
-		<a href="/">Stylesense</a>
-	</div>
-	<div class="main">
-		<div class="content">
+  <div class="header content">
+    <a href="/">Stylesense</a>
+  </div>
 
-			<h2 class="info title">Which outfit is better?</h2>
-			<div class="battle_wrap">
-				<div class="row" id="photos">
-					<div class="col-2-5 pic1_col">
-						<img src="http://distilleryimage5.s3.amazonaws.com/8ba48b0a283c11e3aa8c22000a1fc809_7.jpg" id="photo1" width="306px" height="306px">
-					</div>
-					<div class="col-1-5 skip_col">
-					vs<a class="skip" href="#">Skip</a>
-					</div>
-					<div class="col-2-5 pic2_col">
-						<img src="http://distilleryimage7.s3.amazonaws.com/5ecb6cf028b611e3b16122000a1f9e61_7.jpg" id="photo2" width="306px" height="306px">
-					</div>
-				</div>
+  <div class="main">
+    <div class="content">
+      <h2 class="info title">Which outfit is better?</h2>
+      <div class="battle_wrap">
+        <div class="row" id="photos">
+          <div class="col-2-5 pic1_col">
+            <img data-object-id="tedYONnrfL" src="http://distilleryimage5.s3.amazonaws.com/8ba48b0a283c11e3aa8c22000a1fc809_7.jpg" id="photo1" width="306px" height="306px">
+          </div>
 
-			</div>
-		</div>
-	</div>
-	<script>
-	$('#photo1').on('click', function() {
-		$('#photos').hide();
-		src1 = $('#photo1').attr('src');
-		src2 = $('#photo2').attr('src');
-		result = 'win';
-		process_vote(src1, src2, result);
-		new_round();
-	});
+          <div class="col-1-5 skip_col">
+            vs<a class="skip" href="#">Skip</a>
+          </div>
 
-	$('#photo2').on('click', function() {
-		$('#photos').hide();
-		src1 = $('#photo1').attr('src');
-		src2 = $('#photo2').attr('src');
-		result = 'loss';
-		process_vote(src1, src2, result);
-		new_round();
-	});
+          <div class="col-2-5 pic2_col">
+            <img data-object-id="nfizitOExT"  src="http://distilleryimage7.s3.amazonaws.com/5ecb6cf028b611e3b16122000a1f9e61_7.jpg" id="photo2" width="306px" height="306px">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	function process_vote(src1, src2, result) {
-		$.ajax({
-			url: '/tally_round',
-			method: 'POST',
-			data: {
-				photo1: src1,
-				photo2: src2,
-				result: result
-			}
-		});
-	}
+  <script>
+    $('#photo1').on('click', function() {
+      $('#photos').hide();
 
-	function new_round() {
-		$.ajax({
-			url: '/new_round',
-			method: 'GET',
-			success: function(data) {
-				console.log(data);
-				images = $.parseJSON(data);
-				$('#photo1').attr('src', images[0])
-				$('#photo2').attr('src', images[1])
-				$('#photos').show();
-			}
-		});
-	}
+      id1 = $('#photo1').attr('data-object-id');
+      id2 = $('#photo2').attr('data-object-id');
+      result = 'win';
 
-	</script>
+      process_vote(id1, id2, result);
+      new_round();
+    });
+
+    $('#photo2').on('click', function() {
+      $('#photos').hide();
+
+      id1 = $('#photo1').attr('data-object-id');
+      id2 = $('#photo2').attr('data-object-id');
+      result = 'loss';
+
+      process_vote(id1, id2, result);
+      new_round();
+    });
+
+    function process_vote(id1, id2, result) {
+      $.ajax({
+        url: '/tally_round',
+        method: 'POST',
+        data: {
+          photo1: id1,
+          photo2: id2,
+          result: result
+        }
+      });
+    }
+
+    function setup_image(elem, obj) {
+      var url = obj.images.low_resolution.url;
+
+      elem.attr('src', url);
+      elem.attr('data-object-id', obj.objectId);
+    }
+
+    function new_round() {
+      $.ajax({
+        url: '/new_round',
+        method: 'GET',
+        success: function(data) {
+          images = $.parseJSON(data);
+
+          var photo1 = images[0];
+          var photo2 = images[1];
+
+          setup_image($('#photo1'), photo1);
+          setup_image($('#photo2'), photo2);
+
+          $('#photos').show();
+        }
+      });
+    }
+
+    </script>
 </body>
 
 </html>
