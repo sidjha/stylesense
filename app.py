@@ -8,7 +8,7 @@ from parse_rest.query import QueryResourceDoesNotExist
 import urlparse
 
 # parse for dev purposes
-register('fG2ipuY9tTQP7AvP7tigaruzLU1yDa8tnqrUH5pR', '6yecUHgz1jJtlqjhu2gvboAmP1VaCz7ZSAPxR03R')
+register('jWkR2kmHwh45o14jXDmoA9ujE7T5LVGfLPnaWwN0', '3yENrtbiaiu3k934sehtjq8VMNiTrzZo6Za8J5ob')
 
 app = Flask(__name__)
 
