@@ -11,11 +11,11 @@ register('jWkR2kmHwh45o14jXDmoA9ujE7T5LVGfLPnaWwN0', '3yENrtbiaiu3k934sehtjq8VMN
 
 app = Flask(__name__)
 
-CLIENT_ID = '77bdd37f87264ebea8c9a3178c9abd20'
-CLIENT_SECRET = 'c0b4cfe4fb6949848bb8c022c164a369'
+app = Flask(__name__)
+app.secret_key = 'some_random_secret'
 
-CLIENT_ID_DEV = 'c8a33444e0a94c71863c02b88a075b73'
-CLIENT_SECRET_DEV = '9b1b648a13b649be9a65f82a8c307278'
+INSTAGRAM_CLIENT_ID = 'd18a0312ac06430cba43f02ccbf9c5d4'
+INSTAGRAM_CLIENT_SECRET = '7a2040afd3044962a636ac001be5f5a2'
 
 REDIRECT_URI_DEV = 'http://127.0.0.1:5000/igram_oauth_callback'
 REDIRECT_URI_PROD = 'http://desolate-woodland-8107.herokuapp.com/igram_oauth_callback'
@@ -50,8 +50,8 @@ def igram_oauth():
 def logged_in():
     if 'user' not in session:
         endpoint = 'https://api.instagram.com/oauth/access_token'
-        values = {'client_id': CLIENT_ID, 
-                  'client_secret': CLIENT_SECRET,
+        values = {'client_id': INSTAGRAM_CLIENT_ID,
+                  'client_secret': INSTAGRAM_CLIENT_SECRET,
                   'grant_type': GRANT_TYPE,
                   'redirect_uri': REDIRECT_URI_PROD,
                   'code': session['code'] }
@@ -67,7 +67,7 @@ def logged_in():
         user['username'] = resp_json['user']['username']
         user['user_id'] = resp_json['user']['id']
         session['user'] = user
-    
+
     return render_template('join.html', user=session['user'])
 
 
