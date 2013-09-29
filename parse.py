@@ -63,11 +63,11 @@ class Media(Object):
 
     for k, v in obj.items():
       if hasattr(v, 'url'):
-        return {'height': v.height,
-                'url': v.url,
-                'width': v.width }
+        serialized[k] =  {'height': v.height,
+                          'url': v.url,
+                          'width': v.width }
       else:
-        return repr(v)
+        serialized[k] = repr(v)
 
     return serialized
 
