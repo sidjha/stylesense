@@ -1,11 +1,10 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
-import urllib, urllib2, os
+import urllib, urllib2, os, urlparse, time
 from random import randint
-from parse_rest.connection import register
+from parse_rest.connection import register, ParseBatcher
 from parse_rest.datatypes import Object
 from parse_rest.query import QueryResourceDoesNotExist
-import urlparse
 
 # parse for dev purposes
 register('jWkR2kmHwh45o14jXDmoA9ujE7T5LVGfLPnaWwN0', '3yENrtbiaiu3k934sehtjq8VMNiTrzZo6Za8J5ob')
@@ -95,16 +94,20 @@ def tally_round():
 
 
     print photo1_raw, photo2_raw, result
-    photo1 = Photo.Query.get(img_url=photo1_raw)
-    photo2 = Photo.Query.get(img_url=photo2_raw)
+    try:
+        photo1 = Photo.Query.get(img_url=photo1_raw)
+        photo2 = Photo.Query.get(img_url=photo2_raw)
+    except QueryResourceDoesNotExist:
+        return json.dumps({"errorMsg": "Invalid data"}), 400
 
     ratings = updateRating(photo1, photo2, result)
     photo1.rating = ratings[0]
     photo2.rating = ratings[1]
 
+    photos = [photo1, photo2]
     try:
-        photo1.save()
-        photo2.save()
+        batcher = ParseBatcher()
+        batcher.batch_save(photos)
     except:
         print "ERROR failed to save vote!"
 
@@ -144,12 +147,13 @@ def new_round():
 """
 def get_new_players():
     all = Photo.Query.all()
-    count = all.count() # this is really slow
+    count = all.count()
     rand1 = randint(0, count - 1)
     rand2 = randint(0, count - 1)
+    while rand1 == rand2:
+        rand2 = randint(0, count - 1)
     qs1 = all.limit(1).skip(rand1)
     qs2 = all.limit(1).skip(rand2)
-
     players = []
     for item in qs1:
         players.append(item)
