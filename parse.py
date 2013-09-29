@@ -20,7 +20,7 @@ class Rating(Object):
 
 # Stores image data retrieved from Instagram
 class Media(Object):
-  def update_parameters(details):
+  def update_parameters(self, details):
     for k, v in details.items():
       v = self._serialize_data(k, v)
       setattr(self, k, v)

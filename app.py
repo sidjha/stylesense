@@ -4,7 +4,7 @@ from parse import Media, Parse, Rating
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
 from random import randint
-from rating import BASE_RATING, KC, WIN, LOSS
+from rating import BASE_RATING, KC, WIN, LOSS, update_rating
 
 import ast, urllib, urllib2, os, urlparse, time
 
@@ -92,9 +92,12 @@ def tally_round():
     # if rating exists already, update it
     try:
         rating1 = Rating.Query.get(mediaId=photo1.objectId)
-        rating2 = Rating.Query.get(mediaId=photo2.objectId)
     except QueryResourceDoesNotExist:
         rating1 = Rating(rating=BASE_RATING, mediaId=photo1.objectId)
+
+    try:
+        rating2 = Rating.Query.get(mediaId=photo2.objectId)
+    except QueryResourceDoesNotExist:
         rating2 = Rating(rating=BASE_RATING, mediaId=photo2.objectId)
 
     ratings = update_rating(rating1, rating2, result)
@@ -111,27 +114,6 @@ def tally_round():
     return json.dumps({"success": True}), 200
 
 
-def update_rating(rating1, rating2, result):
-    pl_one = rating1.rating
-    pl_two = rating2.rating
-
-    eA = 1 / (1 + 10**((pl_two - pl_one)/400))
-    eB = 1 / (1 + 10**((pl_one - pl_two)/400))
-
-    print "expected: ", eA, eB
-
-    if result == 'win':
-        pl_one = pl_one + KC*(WIN - eA)
-        pl_two = pl_two + KC*(LOSS - eB)
-        print "pl_one: %d, pl_two: %d" % (pl_one, pl_two)
-    if result == 'loss':
-        pl_one = pl_one + KC*(LOSS - eA)
-        pl_two = pl_two + KC*(WIN - eB)
-        print "pl_one: %d, pl_two: %d" % (pl_one, pl_two)
-
-    return [pl_one, pl_two]
-
-
 @app.route("/new_round")
 def new_round():
     new_players = get_new_players()
@@ -145,27 +127,35 @@ def new_round():
     return json.dumps(players)
 
 
-""" Returns a list containing two new players """
 def get_new_players():
-    all = Media.Query.all()
-    count = 100 # all.count()
+    """ Returns a list containing two new players """
+    most_recent = Media.Query.all().order_by('-createdAt').limit(1)
+
+    if not most_recent.exists():
+        return
+
+    index = 0
+
+    for obj in most_recent:
+        index = obj.index + 1
+
+    count = index
     rand1 = randint(0, count - 1)
     rand2 = randint(0, count - 1)
 
     while rand1 == rand2:
         rand2 = randint(0, count - 1)
 
-    qs1 = all.limit(1).skip(rand1)
-    qs2 = all.limit(1).skip(rand2)
-    players = []
+    player1 = None
+    player2 = None
 
-    for item in qs1:
-        players.append(item)
+    try:
+        player1 = Media.Query.get(index=rand1)
+        player2 = Media.Query.get(index=rand2)
+    except QueryResourceDoesNotExist:
+        return json.dumps({"errorMsg": "Randomization failed"}), 400
 
-    for item in qs2:
-        players.append(item)
-
-    return players
+    return [player1, player2]
 
 
 @app.route("/rating")

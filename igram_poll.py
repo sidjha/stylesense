@@ -25,9 +25,19 @@ def preprocess_obj(obj):
 def poll():
   recent_tags = api.tag_recent_media(tag_name="ootd")
   recent_media = recent_tags[0]
+  count = len(recent_media)
   n = 0
 
-  print "Processing %d recent media items" % len(recent_media)
+  print "Processing %d recent media items" % count
+
+  if count == 0:
+    return
+
+  index = 0
+  most_recent = Media.Query.all().order_by('-createdAt').limit(1)
+
+  for obj in most_recent:
+    index = obj.index + 1
 
   for obj in recent_media:
     obj = preprocess_obj(obj)
@@ -39,13 +49,14 @@ def poll():
                              'filterName': obj.filter,
                              'followers': obj.followers,
                              'images': obj.images,
+                             'index': index,
                              'instagramId': obj.id,
                              'likeCount': obj.like_count,
                              'likes': obj.likes,
                              'link': obj.link,
+                             'mediaCreatedTime': obj.created_time,
                              'standardResolutionUrl': obj.get_standard_resolution_url(),
                              'tags': obj.tags,
-                             'mediaCreatedTime': obj.created_time,
                              'userId': obj.user.id })
 
     if media.followers < FOLLOWER_THRESHOLD:
@@ -54,6 +65,8 @@ def poll():
       continue
 
     media.save()
+
+    index += 1
     n += 1
 
     if media.objectId:
