@@ -1,15 +1,11 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
-import urllib, urllib2, os, urlparse, time
-from random import randint
-from parse_rest.connection import register, ParseBatcher
-from parse_rest.datatypes import Object
+from parse_rest.connection import register
 from parse_rest.query import QueryResourceDoesNotExist
+from random import randint
+from rating import Photo, BASE_RATING, KC, WIN, LOSS
 
-# parse for dev purposes
-register('jWkR2kmHwh45o14jXDmoA9ujE7T5LVGfLPnaWwN0', '3yENrtbiaiu3k934sehtjq8VMNiTrzZo6Za8J5ob')
-
-app = Flask(__name__)
+import urllib, urllib2, os, urlparse, time
 
 app = Flask(__name__)
 app.secret_key = 'some_random_secret'
@@ -20,17 +16,6 @@ INSTAGRAM_CLIENT_SECRET = '7a2040afd3044962a636ac001be5f5a2'
 REDIRECT_URI_DEV = 'http://127.0.0.1:5000/igram_oauth_callback'
 REDIRECT_URI_PROD = 'http://desolate-woodland-8107.herokuapp.com/igram_oauth_callback'
 GRANT_TYPE = 'authorization_code'
-
-app.secret_key = 'some_random_secret'
-
-# Elo Rating System constants
-BASE_RATING = 1400
-KC = 32
-WIN = 1
-LOSS = 0
-
-class Photo(Object):
-    pass
 
 
 @app.route('/')
@@ -76,13 +61,16 @@ def tally_round():
     photo1_raw = None
     photo2_raw = None
     result = None
+
     if 'photo1' in request.form and 'photo2' in request.form and 'result' in request.form:
         photo1_raw = request.form['photo1']
         photo2_raw = request.form['photo2']
         result = request.form['result']
+
         # validate POST data for security
         photo1_url = urlparse.urlparse(photo1_raw)
         photo2_url = urlparse.urlparse(photo2_raw)
+
         if photo1_url.scheme != 'http' or photo1_url.query != '' or photo1_url.params != '':
             return json.dumps({"errorMsg": "Invalid data"}), 400
         if photo2_url.scheme != 'http' or photo2_url.query != '' or photo2_url.params != '':
@@ -92,15 +80,15 @@ def tally_round():
     else:
         return json.dumps({"errorMsg": "Invalid data"}), 400
 
-
     print photo1_raw, photo2_raw, result
+
     try:
         photo1 = Photo.Query.get(img_url=photo1_raw)
         photo2 = Photo.Query.get(img_url=photo2_raw)
     except QueryResourceDoesNotExist:
         return json.dumps({"errorMsg": "Invalid data"}), 400
 
-    ratings = updateRating(photo1, photo2, result)
+    ratings = update_rating(photo1, photo2, result)
     photo1.rating = ratings[0]
     photo2.rating = ratings[1]
 
@@ -114,13 +102,15 @@ def tally_round():
     return json.dumps({"success": True}), 200
 
 
-def updateRating(photo1, photo2, result):
+def update_rating(photo1, photo2, result):
     pl_one = photo1.rating
     pl_two = photo2.rating
 
     eA = 1 / (1 + 10**((pl_two - pl_one)/400))
     eB = 1 / (1 + 10**((pl_one - pl_two)/400))
+
     print "expected: ", eA, eB
+
     if result == 'win':
         pl_one = pl_one + KC*(WIN - eA)
         pl_two = pl_two + KC*(LOSS - eB)
@@ -143,8 +133,7 @@ def new_round():
     return json.dumps([players[0].img_url, players[1].img_url])
 
 
-""" Returns a list containing two new players
-"""
+""" Returns a list containing two new players """
 def get_new_players():
     all = Photo.Query.all()
     count = all.count()
