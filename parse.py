@@ -25,30 +25,15 @@ class Media(Object):
       v = self._serialize_data(k, v)
       setattr(self, k, v)
 
-  def exists(self):
-    if not hasattr(self, 'instagramId'):
-      return False
-
-    connection = httplib.HTTPSConnection('api.parse.com', 443)
-    params = urllib.urlencode({"where":json.dumps({
-          "instagramId": self.instagramId
-        })})
-    connection.connect()
-    connection.request('GET', '/1/classes/Media?%s' % params, '', {
-          "X-Parse-Application-Id": PARSE_APPLICATION_ID,
-          "X-Parse-REST-API-Key": PARSE_REST_API_KEY,
-        })
-
-    result = json.loads(connection.getresponse().read())
-    return len(result['results']) > 0
-
   def save(self):
-    exists = self.exists()
-
-    if exists:
-      print "%s already exists" % self.instagramId
+    try:
+      existing = Media.Query.get(instagramId=self.instagramId)
+    except QueryResourceDoesNotExist:
+      pass
     else:
-      super(Media, self).save()
+      print "%s already exists" % self.instagramId
+
+    super(Media, self).save()
 
   def _serialize_data(self, k, v):
     if k == 'caption':
