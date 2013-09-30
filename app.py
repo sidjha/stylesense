@@ -1,6 +1,6 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
-from parse import Media, Parse, Rating
+from parse import Media, Parse, Rating, get_new_player
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
 from rating import BASE_RATING, KC, WIN, LOSS, update_rating
@@ -120,8 +120,8 @@ def new_round():
     players = []
 
     for player in new_players:
-      images = ast.literal_eval(player.images)
-      players.append({'objectId': player.objectId, 'images': images})
+      images = ast.literal_eval(player['images'])
+      players.append({'objectId': player['objectId'], 'images': images})
 
     print "players: ", players[0]['objectId'], players[1]['objectId']
     return json.dumps(players)
@@ -171,19 +171,18 @@ def get_new_players():
     pair4 = None
 
     try:
-        player1 = Media.Query.get(index=rand1)
-        player2 = Media.Query.get(index=rand2)
+        player1 = get_new_player(rand1)
+        player2 = get_new_player(rand2)
         pair1 = player1, player2
-        player1 = Media.Query.get(index=rand3)
-        player2 = Media.Query.get(index=rand4)
+        player1 = get_new_player(rand3)
+        player2 = get_new_player(rand4)
         pair2 = player1, player2
-        player1 = Media.Query.get(index=rand5)
-        player2 = Media.Query.get(index=rand6)
+        player1 = get_new_player(rand5)
+        player2 = get_new_player(rand6)
         pair3 = player1, player2
-        player1 = Media.Query.get(index=rand7)
-        player2 = Media.Query.get(index=rand8)
+        player1 = get_new_player(rand7)
+        player2 = get_new_player(rand8)
         pair4 = player1, player2
-
     except QueryResourceDoesNotExist:
         return json.dumps({"errorMsg": "Randomization failed"}), 400
 

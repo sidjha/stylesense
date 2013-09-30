@@ -7,6 +7,27 @@ import json, httplib, urllib
 PARSE_APPLICATION_ID = 'GGEI1UGiW8CqKXqovHbt4w9ajoJIVZl7N2uJwdDB'
 PARSE_REST_API_KEY = 'ihituXdUkmnFDZaOu1M44FC4GFQ82ryKZkTx6KYO'
 
+def get_new_player(index):
+  connection = httplib.HTTPSConnection('api.parse.com', 443)
+  params = urllib.urlencode({"keys": "images",
+            "where": json.dumps({
+              "index": {
+                "$gte": index, "$lte": index
+              }
+            }
+          )})
+
+  connection.connect()
+  connection.request('GET', '/1/classes/Media?%s' % params, '', {
+        "X-Parse-Application-Id": PARSE_APPLICATION_ID,
+        "X-Parse-REST-API-Key": PARSE_REST_API_KEY,
+      })
+
+  result = json.loads(connection.getresponse().read())
+
+  return result['results'][0]
+
+
 # Used to connect to Parse
 class Parse:
   def __init__(self):
