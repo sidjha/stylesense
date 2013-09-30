@@ -133,9 +133,9 @@ def new_rounds():
     pairs = []
 
     for pair in new_pairs:
-      images1 = ast.literal_eval(pair[0].images)
-      images2 = ast.literal_eval(pair[1].images)
-      pairs.append(({'objectId': pair[0].objectId, 'images': images1}, {'objectId': pair[1].objectId, 'images': images2}))
+      images1 = ast.literal_eval(pair[0]['images'])
+      images2 = ast.literal_eval(pair[1]['images'])
+      pairs.append(({'objectId': pair[0]['objectId'], 'images': images1}, {'objectId': pair[1]['objectId'], 'images': images2}))
 
     print "pairs: ", pairs
     return json.dumps(pairs)
