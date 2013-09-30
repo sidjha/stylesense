@@ -33,50 +33,46 @@
   </div>
 
   <script>
-    var roundsPlayed = 0;
-    var pairs = [];
-    new_rounds();
-    $('#photo1').on('click', function() {
-      $('#photos').css({'display': 'none'});
-      id1 = $('#photo1').attr('data-object-id');
-      id2 = $('#photo2').attr('data-object-id');
-      result = 'win';
+    var rounds_played = 0;
+    var cur_round, prev_round;
 
-      process_vote(id1, id2, result);
-      load_new_round();
-      roundsPlayed++;
-      if (roundsPlayed == 2) {
-        new_rounds();
+    initialize();
+
+    function Round(player1, player2) {
+      this.player1 = player1;
+      this.player2 = player2;
+      this.winner = null;
+
+      this.set_winner = function(winner) {
+        this.winner = winner;
       }
-    });
 
-    $('#photo2').on('click', function() {
-      $('#photos').css({'display': 'none'});
-      id1 = $('#photo1').attr('data-object-id');
-      id2 = $('#photo2').attr('data-object-id');
-      result = 'loss';
+      this.render = function() {
+        setup_image($('#photo1'), this.player1);
+        setup_image($('#photo2'), this.player2);
+        $('#photos').css({'display': 'block'});
+      }
 
-      process_vote(id1, id2, result);
-      load_new_round();
-    });
+      this.clear_ = function() {
+        $('#photos').css({'display': 'none'});
+      }
 
-    function process_vote(id1, id2, result) {
-      $.ajax({
-        url: '/tally_round',
-        method: 'POST',
-        data: {
-          photo1: id1,
-          photo2: id2,
-          result: result
-        }
-      });
+      this.save = function(obj) {
+        $.ajax({
+          url: '/tally_round',
+          method: 'POST',
+          data: {
+            photo1: obj.player1.obj_id,
+            photo2: obj.player2.obj_id,
+            winner: obj.winner.obj_id
+          }
+        });
+      }
     }
 
-    function setup_image(elem, obj) {
-      var url = obj.images.low_resolution.url;
-
-      elem.attr('src', url);
-      elem.attr('data-object-id', obj.objectId);
+    function Player(player) {
+      this.image_url = player.images.low_resolution.url;
+      this.obj_id = player.objectId;
     }
 
     function new_round() {
@@ -84,20 +80,54 @@
         url: '/new_round',
         method: 'GET',
         success: function(data) {
-          images = $.parseJSON(data);
-
-          var photo1 = images[0];
-          var photo2 = images[1];
-
-          setup_image($('#photo1'), photo1);
-          setup_image($('#photo2'), photo2);
-
-          $('#photos').css({'display': 'block'});
+          var players = $.parseJSON(data);
+          var player1 = new Player(players[0]);
+          var player2 = new Player(players[1]);
+          cur_round = new Round(player1, player2);
+          cur_round.render();
         }
       });
     }
 
-    function new_rounds() {
+    function initialize() {
+      $.ajax({
+        url: '/new_round',
+        method: 'GET',
+        success: function(data) {
+          var players = $.parseJSON(data);
+          console.log("Getting initial data...")
+          console.log(players);
+          var player1 = new Player(players[0]);
+          var player2 = new Player(players[1]);
+          cur_round = new Round(player1, player2);
+          cur_round.render();
+        }
+      });
+    }
+
+    function setup_image(elem, obj) {
+      var url = obj.image_url;
+      elem.attr('src', url);
+    }
+
+    $('#photo1').on('click', function() {
+      cur_round.set_winner(cur_round.player1);
+      prev_round = cur_round;
+      prev_round.clear_();
+      new_round();
+      prev_round.save(prev_round);
+    });
+
+    $('#photo2').on('click', function() {
+      cur_round.set_winner(cur_round.player2);
+      prev_round = cur_round;
+      prev_round.clear_();
+      new_round();
+      prev_round.save(prev_round);
+    });
+   
+
+  /*  function new_rounds() {
       $.ajax({
         url: '/new_rounds',
         method: 'GET',
@@ -108,12 +138,16 @@
       });
     }
 
+
     function load_new_round() {
       setup_image($('#photo1'), pairs[0][0][0]);
       setup_image($('#photo2'), pairs[0][0][1]);
       pairs[0].splice(0, 1);
+      if (pairs[0].length == 0) {
+        pairs.splice(0, 1);
+      }
       $('#photos').css({'display': 'block'});
-    }
+    } */
 
     </script>
 </body>

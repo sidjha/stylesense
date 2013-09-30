@@ -104,7 +104,17 @@ a, a:visited {
 	width: 100%;
 }
 
-.pic1_col, .pic2_col, .user1_col, .user2_col {
+.pic1_col, .pic2_col {
+	text-align: center;
+	font-size: 1.8em;
+}
+
+#photo1, #photo2 {
+	width: 306px;
+	height: 306px;
+}
+
+.user1_col, .user2_col {
 	text-align: center;
 	font-size: 1.8em;
 }

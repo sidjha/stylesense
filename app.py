@@ -62,22 +62,26 @@ def logged_in():
 def tally_round():
     photo1 = None
     photo2 = None
-    result = None
+    winner = None
 
-    if 'photo1' in request.form and 'photo2' in request.form and 'result' in request.form:
+    if 'photo1' in request.form and 'photo2' in request.form and 'winner' in request.form:
         photo1 = request.form['photo1']
         photo2 = request.form['photo2']
-        result = request.form['result']
+        winner = request.form['winner']
 
         # validate POST data for security
-        if len(photo1) == 0 or len(photo2) == 0:
-            return json.dumps({"errorMsg": "Invalid data"}), 400
-        if result != 'win' and result != 'loss':
+        if len(photo1) == 0 or len(photo2) == 0 or len(winner) == 0:
             return json.dumps({"errorMsg": "Invalid data"}), 400
     else:
         return json.dumps({"errorMsg": "Invalid data"}), 400
 
-    print photo1, photo2, result
+    print photo1, photo2, winner
+
+    result = None
+    if winner == photo1:
+        result = 'win'
+    if winner == photo2:
+        result = 'loss'
 
     # verify that media exists
     try:
@@ -129,7 +133,7 @@ def new_round():
 
 @app.route("/new_rounds")
 def new_rounds():
-    new_pairs = get_new_players()
+    new_pairs = get_new_pairs()
     pairs = []
 
     for pair in new_pairs:
@@ -142,6 +146,33 @@ def new_rounds():
 
 
 def get_new_players():
+    """ Returns a list containing two new players """
+    most_recent = Media.Query.all().order_by('-createdAt').limit(1)
+
+
+    if not most_recent.exists():
+        return
+
+    index = 0
+
+    for obj in most_recent:
+        index = obj.index + 1
+
+    count = index
+    randint = LinkedRand(count)
+    rand1 = randint()
+    rand2 = randint()
+
+    try:
+        player1 = get_new_player(rand1)
+        player2 = get_new_player(rand2)
+    except QueryResourceDoesNotExist:
+        return json.dumps({"errorMsg": "Randomization failed"}), 400
+
+    return [player1, player2]
+
+
+def get_new_pairs():
     """ Returns a list containing two new players """
     most_recent = Media.Query.all().order_by('-createdAt').limit(1)
 
