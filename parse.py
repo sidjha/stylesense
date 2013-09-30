@@ -4,12 +4,14 @@ from parse_rest.query import QueryResourceDoesNotExist
 
 import json, httplib, urllib
 
-PARSE_APPLICATION_ID = 'GGEI1UGiW8CqKXqovHbt4w9ajoJIVZl7N2uJwdDB'
-PARSE_REST_API_KEY = 'ihituXdUkmnFDZaOu1M44FC4GFQ82ryKZkTx6KYO'
+#PARSE_APPLICATION_ID = 'GGEI1UGiW8CqKXqovHbt4w9ajoJIVZl7N2uJwdDB'
+#PARSE_REST_API_KEY = 'ihituXdUkmnFDZaOu1M44FC4GFQ82ryKZkTx6KYO'
+PARSE_APPLICATION_ID = 'JhlEKuocrc9Tk1Mi9pAxmi3MDXSkFZ1qZtklcEuf'
+PARSE_REST_API_KEY = 'PNT8miJKbCNJnGWuKgdAX1TUdextDC0hOanMLQ7x'
 
 def get_new_player(index):
   connection = httplib.HTTPSConnection('api.parse.com', 443)
-  params = urllib.urlencode({"keys": "images",
+  params = urllib.urlencode({"keys": "lowResolutionUrl,username,link",
             "where": json.dumps({
               "index": {
                 "$gte": index, "$lte": index

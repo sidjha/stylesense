@@ -70,7 +70,16 @@ a, a:visited {
 .battle_wrap {
   width: 100%; }
 
-.pic1_col, .pic2_col, .user1_col, .user2_col {
+.pic1_col, .pic2_col {
+  text-align: center;
+  font-size: 1.8em;
+  height: 306px; }
+
+#photo1, #photo2 {
+  width: 306px;
+  height: 306px; }
+
+.user1_col, .user2_col {
   text-align: center;
   font-size: 1.8em; }
 
@@ -107,11 +116,14 @@ a, a:visited {
   margin: 10px auto;
   max-width: 950px; }
 
+.photos {
+  height: 306px; }
+
 .footer {
   width: 100%;
   background: #272727;
   clear: both;
-  margin: 100px 0 0 0; }
+  margin: 0px 0 0 0; }
 
 .brief {
   color: #fff;
@@ -129,3 +141,85 @@ a, a:visited {
 .copyright {
   font-size: 0.9em;
   color: #fff; }
+
+.metadata {
+  text-align: center; }
+
+.user_link, .user_link:visited {
+  font-size: 18px;
+  color: #3f729b;
+  font-weight: 200;
+  text-decoration: none; }
+
+.by {
+  font-size: 18px;
+  font-weight: bold;
+  color: #d4d4d4; }
+
+.metadata {
+  display: none; }
+
+.score {
+  width: 100%;
+  padding: 10px 60px 0 60px;
+  background: none;
+  border-top: 3px solid #2ecc71;
+  border-bottom: 3px solid #2ecc71;
+  display: none;
+  font-family: Helvetica, Arial, sans-serif; }
+
+.thumbLink {
+  display: inline-block;
+  width: 150px;
+  height: 150px; }
+  .thumbLink img {
+    width: 150px;
+    height: 150px;
+    vertical-align: bottom; }
+
+.thumbData {
+  text-align: left;
+  display: inline-block;
+  height: 50px; }
+
+.thumbUser {
+  height: 75px;
+  font-size: 1.1em; }
+
+.votes {
+  font-size: 1.1em;
+  height: 15px; }
+
+.result_col {
+  text-align: center;
+  padding: 20px; }
+
+.winner {
+  background: yellow; }
+
+.score_header {
+  font-weight: 300;
+  font-size: 2.5em; }
+
+.ig-b- {
+  display: block;
+  margin: 10px auto; }
+
+.ig-b- img {
+  visibility: hidden; }
+
+.ig-b-:hover {
+  background-position: 0 -60px; }
+
+.ig-b-:active {
+  background-position: 0 -120px; }
+
+.ig-b-v-24 {
+  width: 137px;
+  height: 24px;
+  background: url(//badges.instagram.com/static/images/ig-badge-view-sprite-24.png) no-repeat 0 0; }
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .ig-b-v-24 {
+    background-image: url(//badges.instagram.com/static/images/ig-badge-view-sprite-24@2x.png);
+    background-size: 160px 178px; } }

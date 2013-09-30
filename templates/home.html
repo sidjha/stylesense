@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Join Stylesense</title>
-	<link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+	<link rel="stylesheet" href="/static/css/styles.css?b" type="text/css">
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </head>
 
@@ -15,29 +15,37 @@
 
 			<h2 class="info title">Which outfit is better?</h2>
 			<div class="battle_wrap">
-				<div class="row" id="photos">
+				<div class="row photos" id="photos">
 					<div class="col-2-5 pic1_col">
 						<img src="http://placehold.it/306x306" id="photo1" onerror="new_round();">
+						<!--<img src="http://placehold.it/306x306" class="photo1_bg">-->
 					</div>
 					<div class="col-1-5 skip_col">
-					vs<a class="skip" href="#">Skip</a>
+					vs<a id="skip" class="skip" href="#">Skip</a>
 					</div>
 					<div class="col-2-5 pic2_col">
 						<img src="http://placehold.it/306x306" id="photo2" onerror="new_round();">
+						<!--<img src="http://placehold.it/306x306" class="photo1_bg">-->
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-2-5 user1_col">
-					@user1
+						<div id="metadata1" class="metadata">
+							<a id="link1" href="" class="ig-b- ig-b-v-24" target="_blank"><img src="//badges.instagram.com/static/images/ig-badge-view-24.png" alt="Instagram" /></a>
+							<span class="by">by</span> <a id="user1" class="user_link" target="_blank"></a>
+						</div>
 					</div>
 					<div class="col-1-5">
 					
 					</div>
 					<div class="col-2-5 user2_col">
-					@user2
+						<div id="metadata2" class="metadata">
+							<a id="link2" href="" class="ig-b- ig-b-v-24" target="_blank"><img src="//badges.instagram.com/static/images/ig-badge-view-24.png" alt="Instagram" /></a>
+							<span class="by">by</span> <a id="user2" class="user_link" target="_blank"></a>
+						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" style="display: none">
 					<div class="col-2-5 user1_col">
 					22 wins / 11 losses
 					</div>
@@ -49,14 +57,43 @@
 					</div>
 				</div>
 
+
 			</div>
+
 		</div>
 	</div>
+	<div class="score" id="score">
+				<h2 class="score_header">Last Round</h2>
+				<div class="row">
+					<div class="col-2-5 result_col">
+						<a class="thumbLink" id="thumbLink1">
+							<img id="thumbImg1" class="thumbImg">
+						</a>
+						<div class="thumbData">
+							<a class="thumbUser" id="thumbUser1">asdfasdf</a>
+							<div class="votes">22 wins / 10 losses</div>
+						</div>
+					</div>
+					<div class="col-1-5">
+					
+					</div>
+					<div class="col-2-5 result_col">
+						<a class="thumbLink" id="thumbLink2">
+							<img id="thumbImg2" class="thumbImg">
+						</a>
+						<div class="thumbData">
+							<a class="thumbUser" id="thumbUser2">asdfasfd</a>
+							<div class="votes">22 wins / 10 losses</div>
+						</div>
+					</div>
+				</div>
+			</div>
 	<div class="footer">
 		<div class="content">
-			<p class="brief">Stylesense is a battleground of #ootd pics for the instagram community. <br>Join the fun: <a class="instagram" href="https://api.instagram.com/oauth/authorize/?client_id=77bdd37f87264ebea8c9a3178c9abd20&redirect_uri=http://desolate-woodland-8107.herokuapp.com/igram_oauth_callback&response_type=code"></a></p>
+			<p class="brief">Stylesense is a battleground of #ootd pics for the instagram community. <!--<br>Join the fun: <a class="instagram" href="https://api.instagram.com/oauth/authorize/?client_id=77bdd37f87264ebea8c9a3178c9abd20&redirect_uri=http://desolate-woodland-8107.herokuapp.com/igram_oauth_callback&response_type=code"></a>--></p>
 			<p class="leaderboard_g">Who's winning: <span class="leaders">@kimk (42w / 5l), @rihanna (38w / 6l), @miley (22w / 10l)</span></p>
 			<p class="copyright">&copy; 2013 Stylesen.se. Handcrafted in Canada by <a href="http://twitter.com/aam1r">@aam1r</a> and <a href="http://twitter.com/sidjha">@sidjha</a>.</p>
+
 		</div>
 	</div>
 
@@ -76,13 +113,22 @@
       }
 
       this.render = function() {
-        setup_image($('#photo1'), this.player1);
-        setup_image($('#photo2'), this.player2);
-        $('#photos').css({'display': 'block'});
+        setup_players(this.player1, this.player2);
+        //$('#photo1').css({'display': 'block'});
+        //$('#photo2').css({'display': 'block'});
+        $('#photo1').fadeIn();
+        $('#metadata1').fadeIn();
+        $('#photo2').fadeIn();
+        $('#metadata2').fadeIn();
       }
 
       this.clear_ = function() {
-        $('#photos').css({'display': 'none'});
+       // $('#photo1').css({'display': 'none'});
+       // $('#photo2').css({'display': 'none'});
+        $('#photo1').fadeOut();
+        $('#metadata1').fadeOut();
+        $('#photo2').fadeOut();
+        $('#metadata2').fadeOut();
       }
 
       this.save = function(obj) {
@@ -99,7 +145,9 @@
     }
 
     function Player(player) {
-      this.image_url = player.images.low_resolution.url;
+      this.image_url = player.image;
+      this.username = player.username;
+      this.link_ = player.link;
       this.obj_id = player.objectId;
     }
 
@@ -118,13 +166,15 @@
     }
 
     function initialize() {
+      $('#photo1').fadeOut();
+      $('#photo2').fadeOut();
       $.ajax({
         url: '/new_round',
         method: 'GET',
         success: function(data) {
           var players = $.parseJSON(data);
-          console.log("Getting initial data...")
-          console.log(players);
+          //console.log("Getting initial data...")
+          //console.log(players);
           var player1 = new Player(players[0]);
           var player2 = new Player(players[1]);
           cur_round = new Round(player1, player2);
@@ -133,14 +183,21 @@
       });
     }
 
-    function setup_image(elem, obj) {
-      var url = obj.image_url;
-      elem.attr('src', url);
+    function setup_players(player1, player2) {
+      $('#photo1').attr('src', player1.image_url)
+      $('#photo2').attr('src', player2.image_url)
+
+      $('#user1').html('@' + player1.username).attr('href', 'http://instagram.com/' + player1.username)
+      $('#user2').html('@' + player2.username).attr('href', 'http://instagram.com/' + player2.username)
+ 
+      $('#link1').attr('href', player1.link_)
+      $('#link2').attr('href', player2.link_)
     }
 
     $('#photo1').on('click', function() {
       cur_round.set_winner(cur_round.player1);
       prev_round = cur_round;
+      show_results();
       prev_round.clear_();
       new_round();
       prev_round.save(prev_round);
@@ -149,10 +206,28 @@
     $('#photo2').on('click', function() {
       cur_round.set_winner(cur_round.player2);
       prev_round = cur_round;
+      show_results();
       prev_round.clear_();
       new_round();
       prev_round.save(prev_round);
     });
+
+    $('#skip').on('click', function() {
+    	prev_round = cur_round;
+    	prev_round.clear_();
+    	new_round();
+    	return false;
+    });
+
+    function show_results() {
+    	$('#thumbImg1').attr('src', prev_round.player1.image_url)
+    	$('#thumbImg2').attr('src', prev_round.player2.image_url)
+    	$('#thumbLink1').attr('href', prev_round.player1.link_)
+    	$('#thumbLink2').attr('href', prev_round.player2.link_)
+    	$('#thumbUser1').html('@' + prev_round.player1.username).attr('href', 'http://instagram.com/' + prev_round.player1.username)
+    	$('#thumbUser2').html('@' + prev_round.player2.username).attr('href', 'http://instagram.com/' + prev_round.player2.username)
+    	$('#score').fadeIn();
+    }
     </script>
 </body>
 

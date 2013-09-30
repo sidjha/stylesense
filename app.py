@@ -124,8 +124,11 @@ def new_round():
     players = []
 
     for player in new_players:
-      images = ast.literal_eval(player['images'])
-      players.append({'objectId': player['objectId'], 'images': images})
+      #images = ast.literal_eval(player['images'])
+      image = player['lowResolutionUrl']
+      username = player['username']
+      link = player['link']
+      players.append({'objectId': player['objectId'], 'image': image, 'username': username, 'link': link})
 
     print "players: ", players[0]['objectId'], players[1]['objectId']
     return json.dumps(players)

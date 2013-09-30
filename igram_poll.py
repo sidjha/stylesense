@@ -4,7 +4,7 @@ from parse import Media, Parse
 
 import time
 
-POLL_DELAY = 60 # in seconds
+POLL_DELAY = 5 # in seconds
 FOLLOWER_THRESHOLD = 200
 
 api = None
@@ -56,7 +56,9 @@ def poll():
                              'link': obj.link,
                              'mediaCreatedTime': obj.created_time,
                              'standardResolutionUrl': obj.get_standard_resolution_url(),
+                             'lowResolutionUrl': obj.images['low_resolution'].url,
                              'tags': obj.tags,
+                             'username': obj.user.username,
                              'userId': obj.user.id })
 
     if media.followers < FOLLOWER_THRESHOLD:
