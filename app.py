@@ -3,8 +3,8 @@ from flask import Flask, request, render_template, json, url_for, redirect, sess
 from parse import Media, Parse, Rating
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
-from random import randint
 from rating import BASE_RATING, KC, WIN, LOSS, update_rating
+from apputils import LinkedRand
 
 import ast, urllib, urllib2, os, urlparse, time
 
@@ -127,9 +127,24 @@ def new_round():
     return json.dumps(players)
 
 
+@app.route("/new_rounds")
+def new_rounds():
+    new_pairs = get_new_players()
+    pairs = []
+
+    for pair in new_pairs:
+      images1 = ast.literal_eval(pair[0].images)
+      images2 = ast.literal_eval(pair[1].images)
+      pairs.append(({'objectId': pair[0].objectId, 'images': images1}, {'objectId': pair[1].objectId, 'images': images2}))
+
+    print "pairs: ", pairs
+    return json.dumps(pairs)
+
+
 def get_new_players():
     """ Returns a list containing two new players """
     most_recent = Media.Query.all().order_by('-createdAt').limit(1)
+
 
     if not most_recent.exists():
         return
@@ -140,22 +155,39 @@ def get_new_players():
         index = obj.index + 1
 
     count = index
-    rand1 = randint(0, count - 1)
-    rand2 = randint(0, count - 1)
+    randint = LinkedRand(count)
+    rand1 = randint()
+    rand2 = randint()
+    rand3 = randint()
+    rand4 = randint()
+    rand5 = randint()
+    rand6 = randint()
+    rand7 = randint()
+    rand8 = randint()
 
-    while rand1 == rand2:
-        rand2 = randint(0, count - 1)
-
-    player1 = None
-    player2 = None
+    pair1 = None
+    pair2 = None
+    pair3 = None
+    pair4 = None
 
     try:
         player1 = Media.Query.get(index=rand1)
         player2 = Media.Query.get(index=rand2)
+        pair1 = player1, player2
+        player1 = Media.Query.get(index=rand3)
+        player2 = Media.Query.get(index=rand4)
+        pair2 = player1, player2
+        player1 = Media.Query.get(index=rand5)
+        player2 = Media.Query.get(index=rand6)
+        pair3 = player1, player2
+        player1 = Media.Query.get(index=rand7)
+        player2 = Media.Query.get(index=rand8)
+        pair4 = player1, player2
+
     except QueryResourceDoesNotExist:
         return json.dumps({"errorMsg": "Randomization failed"}), 400
 
-    return [player1, player2]
+    return [pair1, pair2, pair3, pair4]
 
 
 @app.route("/rating")

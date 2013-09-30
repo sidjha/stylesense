@@ -33,26 +33,31 @@
   </div>
 
   <script>
+    var roundsPlayed = 0;
+    var pairs = [];
+    new_rounds();
     $('#photo1').on('click', function() {
-      $('#photos').hide();
-
+      $('#photos').css({'display': 'none'});
       id1 = $('#photo1').attr('data-object-id');
       id2 = $('#photo2').attr('data-object-id');
       result = 'win';
 
       process_vote(id1, id2, result);
-      new_round();
+      load_new_round();
+      roundsPlayed++;
+      if (roundsPlayed == 2) {
+        new_rounds();
+      }
     });
 
     $('#photo2').on('click', function() {
-      $('#photos').hide();
-
+      $('#photos').css({'display': 'none'});
       id1 = $('#photo1').attr('data-object-id');
       id2 = $('#photo2').attr('data-object-id');
       result = 'loss';
 
       process_vote(id1, id2, result);
-      new_round();
+      load_new_round();
     });
 
     function process_vote(id1, id2, result) {
@@ -87,9 +92,27 @@
           setup_image($('#photo1'), photo1);
           setup_image($('#photo2'), photo2);
 
-          $('#photos').show();
+          $('#photos').css({'display': 'block'});
         }
       });
+    }
+
+    function new_rounds() {
+      $.ajax({
+        url: '/new_rounds',
+        method: 'GET',
+        success: function(data) {
+          console.log(data);
+          pairs.push($.parseJSON(data));
+        }
+      });
+    }
+
+    function load_new_round() {
+      setup_image($('#photo1'), pairs[0][0][0]);
+      setup_image($('#photo2'), pairs[0][0][1]);
+      pairs[0].splice(0, 1);
+      $('#photos').css({'display': 'block'});
     }
 
     </script>
