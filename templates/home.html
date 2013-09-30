@@ -3,6 +3,7 @@
 <head>
 	<title>Join Stylesense</title>
 	<link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </head>
 
 <body>
@@ -16,13 +17,13 @@
 			<div class="battle_wrap">
 				<div class="row" id="photos">
 					<div class="col-2-5 pic1_col">
-						<img src="http://placehold.it/306x306" id="photo1">
+						<img src="http://placehold.it/306x306" id="photo1" onerror="new_round();">
 					</div>
 					<div class="col-1-5 skip_col">
 					vs<a class="skip" href="#">Skip</a>
 					</div>
 					<div class="col-2-5 pic2_col">
-						<img src="http://placehold.it/306x306" id="photo2">
+						<img src="http://placehold.it/306x306" id="photo2" onerror="new_round();">
 					</div>
 				</div>
 				<div class="row">
@@ -58,7 +59,101 @@
 			<p class="copyright">&copy; 2013 Stylesen.se. Handcrafted in Canada by <a href="http://twitter.com/aam1r">@aam1r</a> and <a href="http://twitter.com/sidjha">@sidjha</a>.</p>
 		</div>
 	</div>
-	
+
+	<script>
+    var rounds_played = 0;
+    var cur_round, prev_round;
+
+    initialize();
+
+    function Round(player1, player2) {
+      this.player1 = player1;
+      this.player2 = player2;
+      this.winner = null;
+
+      this.set_winner = function(winner) {
+        this.winner = winner;
+      }
+
+      this.render = function() {
+        setup_image($('#photo1'), this.player1);
+        setup_image($('#photo2'), this.player2);
+        $('#photos').css({'display': 'block'});
+      }
+
+      this.clear_ = function() {
+        $('#photos').css({'display': 'none'});
+      }
+
+      this.save = function(obj) {
+        $.ajax({
+          url: '/tally_round',
+          method: 'POST',
+          data: {
+            photo1: obj.player1.obj_id,
+            photo2: obj.player2.obj_id,
+            winner: obj.winner.obj_id
+          }
+        });
+      }
+    }
+
+    function Player(player) {
+      this.image_url = player.images.low_resolution.url;
+      this.obj_id = player.objectId;
+    }
+
+    function new_round() {
+      $.ajax({
+        url: '/new_round',
+        method: 'GET',
+        success: function(data) {
+          var players = $.parseJSON(data);
+          var player1 = new Player(players[0]);
+          var player2 = new Player(players[1]);
+          cur_round = new Round(player1, player2);
+          cur_round.render();
+        }
+      });
+    }
+
+    function initialize() {
+      $.ajax({
+        url: '/new_round',
+        method: 'GET',
+        success: function(data) {
+          var players = $.parseJSON(data);
+          console.log("Getting initial data...")
+          console.log(players);
+          var player1 = new Player(players[0]);
+          var player2 = new Player(players[1]);
+          cur_round = new Round(player1, player2);
+          cur_round.render();
+        }
+      });
+    }
+
+    function setup_image(elem, obj) {
+      var url = obj.image_url;
+      elem.attr('src', url);
+    }
+
+    $('#photo1').on('click', function() {
+      cur_round.set_winner(cur_round.player1);
+      prev_round = cur_round;
+      prev_round.clear_();
+      new_round();
+      prev_round.save(prev_round);
+    });
+
+    $('#photo2').on('click', function() {
+      cur_round.set_winner(cur_round.player2);
+      prev_round = cur_round;
+      prev_round.clear_();
+      new_round();
+      prev_round.save(prev_round);
+    });
+    </script>
 </body>
 
 </html>
