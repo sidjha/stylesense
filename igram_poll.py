@@ -4,7 +4,7 @@ from parse import Media, Parse
 
 import time
 
-POLL_DELAY = 5 # in seconds
+POLL_DELAY = 60 # in seconds
 FOLLOWER_THRESHOLD = 200
 
 api = None
