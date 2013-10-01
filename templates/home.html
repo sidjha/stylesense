@@ -91,10 +91,10 @@
 	<div class="footer">
 		<div class="content">
 			<p class="brief">Stylesense is a battleground of #ootd pics for the instagram community. <!--<br>Join the fun: <a class="instagram" href="https://api.instagram.com/oauth/authorize/?client_id=77bdd37f87264ebea8c9a3178c9abd20&redirect_uri=http://desolate-woodland-8107.herokuapp.com/igram_oauth_callback&response_type=code"></a>--></p>
-			<p class="leaderboard_g">Who's winning: <span class="leaders">@kimk (42w / 5l), @rihanna (38w / 6l), @miley (22w / 10l)</span></p>
-			<p class="copyright">&copy; 2013 Stylesen.se. Handcrafted in Canada by <a href="http://twitter.com/aam1r">@aam1r</a> and <a href="http://twitter.com/sidjha">@sidjha</a>.</p>
-
+			<h3 id="leaderboard_header" class="leaderboard_header">Who's winning</h3>
+			<ul id="leaderboard" class="leaderboard"></ul>
 		</div>
+		<p class="copyright" id="copyright">&copy; 2013 Stylesen.se. Handmade in Canada by <a href="http://twitter.com/aam1r">@aam1r</a> and <a href="http://twitter.com/sidjha">@sidjha</a>.</p>
 	</div>
 
 	<script>
@@ -183,6 +183,7 @@
           cur_round.render();
         }
       });
+      update_leaderboard();
     }
 
     function setup_players(player1, player2) {
@@ -245,6 +246,44 @@
     		$('#result2').addClass('winner');
     	}
     	$('#score').fadeIn();
+    }
+
+    function Leader(attributes) {
+    	this.img_url = attributes['img_url'];
+    	this.link_ = attributes['link'];
+    	this.losses = attributes['losses'];
+    	this.username = attributes['username'];
+    	this.wins = attributes['wins'];
+    }
+
+    function update_leaderboard() {
+    	var leaders = []
+    	$.getJSON('/leaderboard', function(data) {
+    		for(var i=0; i < data.length; i++) {
+    			leaders.push(new Leader(data[i]));
+    			console.log(leaders);
+    		}
+    		render_leaderboard(leaders);
+    	});
+    }
+
+    function render_leaderboard(leaders) {
+    	$('#leaderboard').empty();
+    	for(var i=0; i < leaders.length; i++) {
+    		var handle = leaders[i].username;
+    		var link = leaders[i].link_;
+    		var losses = leaders[i].losses;
+    		var wins = leaders[i].wins;
+    		var img_url = leaders[i].img_url;
+    		li = '<a class="leader_img" href="' + link + '" target="_blank"><img src="' + img_url + '"></a>' +
+    			 '<a class="leader_handle" href="http://instagram.com/' + 
+    			 handle + '" target="_blank">@' + handle + '</a>' + 
+    			 '<span class="stats">' + wins + 'w / ' + losses + 'l</span>';
+    		$('#leaderboard').append('<li>' + li + '</li>');
+    	}
+    	$('#copyright').css('margin-top', '80px');
+    	$('#leaderboard_header').fadeIn();
+    	$('#leaderboard').fadeIn();
     }
     </script>
 </body>

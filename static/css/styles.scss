@@ -1,4 +1,5 @@
 $basefont: Helvetica, Arial, sans-serif;
+$emerald: #2ecc71;
 
 @mixin bw {
 	// TODO add browser decl
@@ -197,8 +198,18 @@ $footer_fontsize: 2em;
 }
 
 .copyright {
-	font-size: 0.9em;
+	border-top: 1px solid #d4d4d4;
+	font-size: 1em;
 	color: #fff;
+	width: 100%;
+	margin: 0;
+	padding: 20px 20px;
+	font-family: $basefont;
+	font-weight: 300;
+
+	a, a:visited {
+		color: $emerald;
+	}
 }
 
 .metadata {
@@ -222,7 +233,7 @@ $footer_fontsize: 2em;
 	display: none;
 }
 
-$emerald: #2ecc71;
+
 .score {
 	width: 100%;
 	padding: 10px 60px 0 60px;
@@ -279,6 +290,60 @@ $results_dim: 150px;
 .score_header {
 	font-weight: 300;
 	font-size: 2.5em;
+}
+
+$leader-dim: 150px;
+$username-color: $emerald;
+$stats-color: $emerald;
+
+ul.leaderboard {
+	display: none;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	li {
+		width: $leader-dim + 20;
+		height: $leader-dim + 20;
+		display: inline-block;
+		margin-right: 20px;
+		text-align: center;
+		a.leader_img {
+			display: block;
+			width: $leader-dim;
+			height: $leader-dim;
+			text-decoration: none;
+			img {
+				width: $leader-dim;
+				height: $leader-dim;
+				border: 10px solid #fff;
+			}
+		}
+		
+		a.leader_handle, a.leader_handle:visited {
+			display: block;
+			padding: 8px;
+			font-size: 1.1em;
+			font-weight: bold;
+			text-decoration: none;
+			color: $username-color;
+			&:visited {
+				color: $username-color;
+			}
+		}
+		.stats {
+			display: block;
+			font-size: 1.4em;
+			color: $stats-color;
+			font-weight: 300;
+		}
+	}
+}
+
+.leaderboard_header {
+	font-size: 2em;
+	font-weight: 300;
+	color: #fff;
+	display: none;
 }
 
 

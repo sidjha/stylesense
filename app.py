@@ -12,6 +12,8 @@ app = Flask(__name__)
 app.secret_key = 'some_random_secret'
 parse = Parse()
 
+import leaderboard
+
 INSTAGRAM_CLIENT_ID = 'd18a0312ac06430cba43f02ccbf9c5d4'
 INSTAGRAM_CLIENT_SECRET = '7a2040afd3044962a636ac001be5f5a2'
 
@@ -152,6 +154,11 @@ def new_round():
     return json.dumps(players)
 
 
+@app.route("/leaderboard")
+def get_leaderboard():
+    import leaderboard
+    leaders = leaderboard.get_leaderboard(5)
+    return json.dumps(leaders)
 
 def get_new_players():
     """ Returns a list containing two new players """

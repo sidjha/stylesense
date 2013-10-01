@@ -139,8 +139,16 @@ a, a:visited {
   color: #7AE4F5; }
 
 .copyright {
-  font-size: 0.9em;
-  color: #fff; }
+  border-top: 1px solid #d4d4d4;
+  font-size: 1em;
+  color: #fff;
+  width: 100%;
+  margin: 0;
+  padding: 20px 20px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 300; }
+  .copyright a, .copyright a:visited {
+    color: #2ecc71; }
 
 .metadata {
   text-align: center; }
@@ -205,6 +213,47 @@ a, a:visited {
 .score_header {
   font-weight: 300;
   font-size: 2.5em; }
+
+ul.leaderboard {
+  display: none;
+  padding: 0;
+  margin: 0;
+  list-style: none; }
+  ul.leaderboard li {
+    width: 170px;
+    height: 170px;
+    display: inline-block;
+    margin-right: 20px;
+    text-align: center; }
+    ul.leaderboard li a.leader_img {
+      display: block;
+      width: 150px;
+      height: 150px;
+      text-decoration: none; }
+      ul.leaderboard li a.leader_img img {
+        width: 150px;
+        height: 150px;
+        border: 10px solid #fff; }
+    ul.leaderboard li a.leader_handle, ul.leaderboard li a.leader_handle:visited {
+      display: block;
+      padding: 8px;
+      font-size: 1.1em;
+      font-weight: bold;
+      text-decoration: none;
+      color: #2ecc71; }
+      ul.leaderboard li a.leader_handle:visited, ul.leaderboard li a.leader_handle:visited:visited {
+        color: #2ecc71; }
+    ul.leaderboard li .stats {
+      display: block;
+      font-size: 1.4em;
+      color: #2ecc71;
+      font-weight: 300; }
+
+.leaderboard_header {
+  font-size: 2em;
+  font-weight: 300;
+  color: #fff;
+  display: none; }
 
 .ig-b- {
   display: block;
