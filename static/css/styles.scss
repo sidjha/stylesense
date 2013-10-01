@@ -1,5 +1,6 @@
 $basefont: Helvetica, Arial, sans-serif;
 $emerald: #2ecc71;
+$fgcolor: $emerald;
 
 @mixin bw {
 	// TODO add browser decl
@@ -135,15 +136,17 @@ a, a:visited {
 
 .skip, .skip:visited {
 	display: block;
-	width: 60px;
-	background: #000;
-	color: #fff;
-	padding: 10px;
+	width: 100px;
+	border: 5px solid $fgcolor;
+	color: $fgcolor;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-weight: bold;
+	padding: 15px;
 	margin: 30px auto;
 	&:hover {
-		background: #fff;
 		color: #000;
-		border: 1px solid #000;
+		border: 5px solid #000;
 	}
 }
 
@@ -173,7 +176,7 @@ a, a:visited {
 
 .footer {
 	width: 100%;
-	background: #272727;
+	background: $fgcolor;
 	clear: both;
 	margin: 0px 0 0 0;
 }
@@ -197,7 +200,7 @@ $footer_fontsize: 2em;
 }
 
 .copyright {
-	border-top: 1px solid #d4d4d4;
+	border-top: 3px solid #fff;
 	font-size: 1em;
 	color: #fff;
 	width: 100%;
@@ -207,7 +210,7 @@ $footer_fontsize: 2em;
 	font-weight: 300;
 
 	a, a:visited {
-		color: $emerald;
+		color: #fff;
 	}
 }
 
@@ -237,8 +240,8 @@ $footer_fontsize: 2em;
 	width: 100%;
 	padding: 20px 60px 20px 60px;
 	background: none;
-	border-top: 3px solid $emerald;
-	border-bottom: 3px solid $emerald;
+	border-top: 3px solid $fgcolor;
+	border-bottom: 3px solid #000;
 	display: none;
 	font-family: $basefont;
 }
@@ -282,8 +285,9 @@ $results_dim: 150px;
 }
 
 .winner {
-	border: 3px solid $emerald;
+	//border: 3px solid $fgcolor;
 	@include rounded-border(12px);
+	background: lighten($fgcolor, 20);
 }
 
 .score_header {
@@ -295,8 +299,8 @@ $results_dim: 150px;
 }
 
 $leader-dim: 150px;
-$username-color: $emerald;
-$stats-color: $emerald;
+$username-color: #fff;
+$stats-color: #fff;
 
 .leaderboard {
 	display: none;
