@@ -76,18 +76,18 @@ def poll():
       index += 1
       n += 1
 
-  try:
-    batcher = ParseBatcher()
-    batcher.batch_save(media_list)
-  except Exception as e:
-    print e
-    print "ERROR: %d items could not be saved" % n
-  else:
-    print "%d items saved: " % n
-    for media in media_list:
-      print " Media (id: %s)" % media.objectId
-  finally:
-    print "Waiting.."
+  if len(media_list) > 0:
+    try:
+      batcher = ParseBatcher()
+      batcher.batch_save(media_list)
+    except Exception as e:
+      print e
+      print "ERROR: %d items could not be saved" % n
+    else:
+      print "%d items saved: " % n
+      for media in media_list:
+        print " Media (id: %s)" % media.objectId
+  print "\nWaiting..."
 
 
 if __name__ == "__main__":
