@@ -108,12 +108,23 @@ def tally_round():
     rating1.rating = ratings[0]
     rating2.rating = ratings[1]
 
-    ratings = [rating1, rating2]
+    if result == 'win':
+        photo1.wins = photo1.wins + 1
+        photo2.losses = photo2.losses + 1
+        
+    if result == 'loss':
+        photo2.wins = photo2.wins + 1
+        photo1.losses = photo1.losses + 1
+
+    # save all objects at once
+    objects = [rating1, rating2, photo1, photo2]
+    
     try:
         batcher = ParseBatcher()
-        batcher.batch_save(ratings)
-    except:
-        return json.dumps({"errorMsg": "Failed to save votes"}), 400
+        batcher.batch_save(objects)
+    except Exception as e:
+        print e
+        return json.dumps({"errorMsg": "Votes could not be saved."}), 400
 
     return json.dumps({"success": True}), 200
 
@@ -128,7 +139,14 @@ def new_round():
       image = player['lowResolutionUrl']
       username = player['username']
       link = player['link']
-      players.append({'objectId': player['objectId'], 'image': image, 'username': username, 'link': link})
+      wins = player['wins']
+      losses = player['losses']
+      players.append({'objectId': player['objectId'], 
+                      'image': image, 
+                      'username': username, 
+                      'link': link, 
+                      'wins': wins,
+                      'losses': losses})
 
     print "players: ", players[0]['objectId'], players[1]['objectId']
     return json.dumps(players)

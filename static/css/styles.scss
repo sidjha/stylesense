@@ -253,6 +253,10 @@ $results_dim: 150px;
 .votes {
 	font-size: 1.1em;
 	height: 15px;
+
+	div {
+		display: inline-block;
+	}
 }
 
 .result_col {

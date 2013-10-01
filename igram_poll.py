@@ -1,6 +1,7 @@
 from app import INSTAGRAM_CLIENT_ID, INSTAGRAM_CLIENT_SECRET
 from instagram.client import InstagramAPI
 from parse import Media, Parse
+from parse_rest.connection import ParseBatcher
 
 import time
 
@@ -39,6 +40,7 @@ def poll():
   for obj in most_recent:
     index = obj.index + 1
 
+  media_list = []
   for obj in recent_media:
     obj = preprocess_obj(obj)
 
@@ -54,27 +56,38 @@ def poll():
                              'likeCount': obj.like_count,
                              'likes': obj.likes,
                              'link': obj.link,
+                             'losses': 0,
+                             'lowResolutionUrl': obj.images['low_resolution'].url,
                              'mediaCreatedTime': obj.created_time,
                              'standardResolutionUrl': obj.get_standard_resolution_url(),
-                             'lowResolutionUrl': obj.images['low_resolution'].url,
                              'tags': obj.tags,
                              'username': obj.user.username,
-                             'userId': obj.user.id })
+                             'userId': obj.user.id,
+                             'wins': 0})
 
     if media.followers < FOLLOWER_THRESHOLD:
       continue
     elif 'ootd' not in media.tags:
       continue
 
-    media.save()
+    if not media.exists():
+      media_list.append(media)
+      print "Media %s queued for save" % n
+      index += 1
+      n += 1
 
-    index += 1
-    n += 1
-
-    if media.objectId:
-      print "Media saved successfully (id: %s)" % media.objectId
-
-  print "%d items saved" % n
+  try:
+    batcher = ParseBatcher()
+    batcher.batch_save(media_list)
+  except Exception as e:
+    print e
+    print "ERROR: %d items could not be saved" % n
+  else:
+    print "%d items saved: " % n
+    for media in media_list:
+      print " Media (id: %s)" % media.objectId
+  finally:
+    print "Waiting.."
 
 
 if __name__ == "__main__":

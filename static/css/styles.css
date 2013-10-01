@@ -189,6 +189,8 @@ a, a:visited {
 .votes {
   font-size: 1.1em;
   height: 15px; }
+  .votes div {
+    display: inline-block; }
 
 .result_col {
   text-align: center;

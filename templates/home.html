@@ -71,7 +71,7 @@
 						</a>
 						<div class="thumbData">
 							<a class="thumbUser" id="thumbUser1" target="_blank">asdfasdf</a>
-							<div class="votes">22 wins / 10 losses</div>
+							<div class="votes"><div id="wins1">22</div> wins / <div id="losses1">10</div> losses</div>
 						</div>
 					</div>
 					<div class="col-1-5">
@@ -83,7 +83,7 @@
 						</a>
 						<div class="thumbData">
 							<a class="thumbUser" id="thumbUser2" target="_blank">asdfasfd</a>
-							<div class="votes">22 wins / 10 losses</div>
+							<div class="votes"><div id="wins2">22</div> wins / <div id="losses2">10</div> losses</div>
 						</div>
 					</div>
 				</div>
@@ -149,6 +149,8 @@
       this.username = player.username;
       this.link_ = player.link;
       this.obj_id = player.objectId;
+      this.wins = player.wins;
+      this.losses = player.losses;
     }
 
     function new_round() {
@@ -220,12 +222,24 @@
     });
 
     function show_results() {
-    	$('#thumbImg1').attr('src', prev_round.player1.image_url)
-    	$('#thumbImg2').attr('src', prev_round.player2.image_url)
-    	$('#thumbLink1').attr('href', prev_round.player1.link_)
-    	$('#thumbLink2').attr('href', prev_round.player2.link_)
-    	$('#thumbUser1').html('@' + prev_round.player1.username).attr('href', 'http://instagram.com/' + prev_round.player1.username)
-    	$('#thumbUser2').html('@' + prev_round.player2.username).attr('href', 'http://instagram.com/' + prev_round.player2.username)
+    	$('#thumbImg1').attr('src', prev_round.player1.image_url);
+    	$('#thumbImg2').attr('src', prev_round.player2.image_url);
+    	$('#thumbLink1').attr('href', prev_round.player1.link_);
+    	$('#thumbLink2').attr('href', prev_round.player2.link_);
+    	$('#thumbUser1').html('@' + prev_round.player1.username).attr('href', 'http://instagram.com/' + prev_round.player1.username);
+    	$('#thumbUser2').html('@' + prev_round.player2.username).attr('href', 'http://instagram.com/' + prev_round.player2.username);
+    	if (prev_round.winner.obj_id == prev_round.player1.obj_id) {
+    		$('#wins1').html(prev_round.player1.wins + 1);
+    		$('#losses1').html(prev_round.player1.losses);
+    		$('#wins2').html(prev_round.player2.wins);
+    		$('#losses2').html(prev_round.player2.losses + 1);
+    	}
+    	else {
+    		$('#wins1').html(prev_round.player1.wins);
+    		$('#losses1').html(prev_round.player1.losses + 1);
+    		$('#wins2').html(prev_round.player2.wins + 1);
+    		$('#losses2').html(prev_round.player2.losses);
+    	}
     	$('#score').fadeIn();
     }
     </script>

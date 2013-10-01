@@ -6,12 +6,12 @@ import json, httplib, urllib
 
 #PARSE_APPLICATION_ID = 'GGEI1UGiW8CqKXqovHbt4w9ajoJIVZl7N2uJwdDB'
 #PARSE_REST_API_KEY = 'ihituXdUkmnFDZaOu1M44FC4GFQ82ryKZkTx6KYO'
-PARSE_APPLICATION_ID = 'JhlEKuocrc9Tk1Mi9pAxmi3MDXSkFZ1qZtklcEuf'
-PARSE_REST_API_KEY = 'PNT8miJKbCNJnGWuKgdAX1TUdextDC0hOanMLQ7x'
+PARSE_APPLICATION_ID = 'pcWvIBPmiTIsMPQzC4xv9cFXrjJTqrYutpZto34P'
+PARSE_REST_API_KEY = 'sxPV488nf5XYNzv50RLoWKeTCIDKBqJhXYYLsuEb'
 
 def get_new_player(index):
   connection = httplib.HTTPSConnection('api.parse.com', 443)
-  params = urllib.urlencode({"keys": "lowResolutionUrl,username,link",
+  params = urllib.urlencode({"keys": "lowResolutionUrl,username,link,wins,losses",
             "where": json.dumps({
               "index": {
                 "$gte": index, "$lte": index
@@ -48,15 +48,14 @@ class Media(Object):
       v = self._serialize_data(k, v)
       setattr(self, k, v)
 
-  def save(self):
+  def exists(self):
     try:
       existing = Media.Query.get(instagramId=self.instagramId)
     except QueryResourceDoesNotExist:
-      pass
+      return False
     else:
       print "%s already exists" % self.instagramId
-
-    super(Media, self).save()
+      return True
 
   def _serialize_data(self, k, v):
     if k == 'caption':
