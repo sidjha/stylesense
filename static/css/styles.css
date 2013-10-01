@@ -122,7 +122,7 @@ a, a:visited {
 
 .footer {
   width: 100%;
-  background: #2ecc71;
+  background: #54d98c;
   clear: both;
   margin: 0px 0 0 0; }
 
@@ -173,7 +173,7 @@ a, a:visited {
   padding: 20px 60px 20px 60px;
   background: none;
   border-top: 3px solid #2ecc71;
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid #2ecc71;
   display: none;
   font-family: Helvetica, Arial, sans-serif; }
 

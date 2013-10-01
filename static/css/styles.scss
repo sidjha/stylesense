@@ -176,7 +176,7 @@ a, a:visited {
 
 .footer {
 	width: 100%;
-	background: $fgcolor;
+	background: lighten($fgcolor, 10);
 	clear: both;
 	margin: 0px 0 0 0;
 }
@@ -241,7 +241,7 @@ $footer_fontsize: 2em;
 	padding: 20px 60px 20px 60px;
 	background: none;
 	border-top: 3px solid $fgcolor;
-	border-bottom: 3px solid #000;
+	border-bottom: 3px solid $fgcolor;
 	display: none;
 	font-family: $basefont;
 }
