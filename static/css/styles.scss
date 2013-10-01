@@ -29,6 +29,7 @@ $fgcolor: $emerald;
 body {
 	padding: 0;
 	margin: 0;
+	width: 100%;
 }
 
 a, a:visited {
@@ -55,17 +56,32 @@ a, a:visited {
 	padding: 10px 20px;
 	font-family: $basefont;
 	font-weight: 300;
+
+	@media only screen and (max-device-width: 320px) {
+		padding: 10px 10px;
+	}
 }
 
 .main {
 	width: 100%;
 	min-height: 400px;
+	@media only screen and (max-device-width: 320px) {
+		margin-top: 80px;
+	}
 }
 
 .info {
 	font-size: 2.5em;
 	line-height: 2em;
 	font-weight: 300;
+
+
+	@media only screen and (max-device-width: 320px) {
+		font-size: 1.2em;
+		line-height: 1em;
+		padding: 10px 0;
+		margin:0;
+	}
 }
 
 .instagram {
@@ -110,17 +126,34 @@ a, a:visited {
 
 .battle_wrap {
 	width: 100%;
+
 }
 
 .pic1_col, .pic2_col {
 	text-align: center;
 	font-size: 1.8em;
 	height: 400px;
+
+	@media only screen and (max-device-width: 320px) {
+		height: 220px;
+		margin-bottom: 10px;
+	}
+}
+
+@media only screen and (max-device-width: 320px) {
+	.pic1_col {
+		border-bottom: 1px solid #000;
+	}
 }
 
 #photo1, #photo2 {
 	width: 306px;
 	height: 306px;
+
+	@media only screen and (max-device-width: 320px) {
+		width: 150px;
+		height: 150px;
+	}
 }
 
 .user1_col, .user2_col {
@@ -132,6 +165,11 @@ a, a:visited {
 	text-align: center;
 	font-size: 1.4em;
 	padding-top: 8%;
+
+	@media only screen and (max-device-width: 320px) {
+		position: absolute;
+		top: 0px;
+	}
 }
 
 .skip, .skip:visited {
@@ -148,10 +186,15 @@ a, a:visited {
 		color: #000;
 		border: 5px solid #000;
 	}
+
+	@media only screen and (max-device-width: 320px) {
+		width: 80%;
+	}
 }
 
 .title {
 	text-align: center;
+	width: 100%;
 }
 
 .col-2-5 {
@@ -187,12 +230,11 @@ $footer_fontsize: 2em;
 	color: #fff;
 	font-size: $footer_fontsize;
 	line-height: 1.8em;
-}
 
-.leaderboard_g {
-	color: #fff;
-	font-size: $footer_fontsize;
-	line-height: 1.8em;
+	@media only screen and (max-device-width: 320px) {
+		font-size: 1em;
+		line-height: 1.1em;
+	}
 }
 
 .leaders {
@@ -216,6 +258,10 @@ $footer_fontsize: 2em;
 
 .metadata {
 	text-align: center;
+
+	@media only screen and (max-device-width: 320px) {
+		height: 60px;
+	}
 }
 
 .user_link, .user_link:visited {
@@ -223,6 +269,11 @@ $footer_fontsize: 2em;
 	color: #3f729b;
 	font-weight: 200;
 	text-decoration: none;
+	@media only screen and (max-device-width: 320px) {
+		font-size: 14px;
+		padding: 0;
+		margin: 0;
+	}
 }
 
 .by {
@@ -342,10 +393,21 @@ $stats-color: #fff;
 	font-weight: 300;
 	color: #fff;
 	display: none;
+
+	@media only screen and (max-device-width: 320px) {
+		font-size: 1em;
+	}
 }
 
 
-.ig-b- { display:  block; margin: 10px auto;}
+.ig-b- { 
+	display:  block; 
+	margin: 10px auto;
+
+	@media only screen and (max-device-width: 320px) {
+		margin: 0 auto;
+	}
+}
 .ig-b- img { visibility: hidden; }
 .ig-b-:hover { background-position: 0 -60px; } .ig-b-:active { background-position: 0 -120px; }
 .ig-b-v-24 { width: 137px; height: 24px; background: url(//badges.instagram.com/static/images/ig-badge-view-sprite-24.png) no-repeat 0 0; }

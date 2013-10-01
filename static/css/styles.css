@@ -3,7 +3,8 @@
 
 body {
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  width: 100%; }
 
 a, a:visited {
   color: red; }
@@ -24,15 +25,27 @@ a, a:visited {
   padding: 10px 20px;
   font-family: Helvetica, Arial, sans-serif;
   font-weight: 300; }
+  @media only screen and (max-device-width: 320px) {
+    .content {
+      padding: 10px 10px; } }
 
 .main {
   width: 100%;
   min-height: 400px; }
+  @media only screen and (max-device-width: 320px) {
+    .main {
+      margin-top: 80px; } }
 
 .info {
   font-size: 2.5em;
   line-height: 2em;
   font-weight: 300; }
+  @media only screen and (max-device-width: 320px) {
+    .info {
+      font-size: 1.2em;
+      line-height: 1em;
+      padding: 10px 0;
+      margin: 0; } }
 
 .instagram {
   display: inline-block;
@@ -74,10 +87,21 @@ a, a:visited {
   text-align: center;
   font-size: 1.8em;
   height: 400px; }
+  @media only screen and (max-device-width: 320px) {
+    .pic1_col, .pic2_col {
+      height: 220px;
+      margin-bottom: 10px; } }
 
+@media only screen and (max-device-width: 320px) {
+  .pic1_col {
+    border-bottom: 1px solid #000; } }
 #photo1, #photo2 {
   width: 306px;
   height: 306px; }
+  @media only screen and (max-device-width: 320px) {
+    #photo1, #photo2 {
+      width: 150px;
+      height: 150px; } }
 
 .user1_col, .user2_col {
   text-align: center;
@@ -87,6 +111,10 @@ a, a:visited {
   text-align: center;
   font-size: 1.4em;
   padding-top: 8%; }
+  @media only screen and (max-device-width: 320px) {
+    .skip_col {
+      position: absolute;
+      top: 0px; } }
 
 .skip, .skip:visited {
   display: block;
@@ -101,9 +129,13 @@ a, a:visited {
   .skip:hover, .skip:visited:hover {
     color: #000;
     border: 5px solid #000; }
+  @media only screen and (max-device-width: 320px) {
+    .skip, .skip:visited {
+      width: 80%; } }
 
 .title {
-  text-align: center; }
+  text-align: center;
+  width: 100%; }
 
 .col-2-5 {
   width: 400px;
@@ -130,11 +162,10 @@ a, a:visited {
   color: #fff;
   font-size: 2em;
   line-height: 1.8em; }
-
-.leaderboard_g {
-  color: #fff;
-  font-size: 2em;
-  line-height: 1.8em; }
+  @media only screen and (max-device-width: 320px) {
+    .brief {
+      font-size: 1em;
+      line-height: 1.1em; } }
 
 .leaders {
   color: #7AE4F5; }
@@ -153,12 +184,20 @@ a, a:visited {
 
 .metadata {
   text-align: center; }
+  @media only screen and (max-device-width: 320px) {
+    .metadata {
+      height: 60px; } }
 
 .user_link, .user_link:visited {
   font-size: 18px;
   color: #3f729b;
   font-weight: 200;
   text-decoration: none; }
+  @media only screen and (max-device-width: 320px) {
+    .user_link, .user_link:visited {
+      font-size: 14px;
+      padding: 0;
+      margin: 0; } }
 
 .by {
   font-size: 18px;
@@ -250,10 +289,16 @@ a, a:visited {
   font-weight: 300;
   color: #fff;
   display: none; }
+  @media only screen and (max-device-width: 320px) {
+    .leaderboard_header {
+      font-size: 1em; } }
 
 .ig-b- {
   display: block;
   margin: 10px auto; }
+  @media only screen and (max-device-width: 320px) {
+    .ig-b- {
+      margin: 0 auto; } }
 
 .ig-b- img {
   visibility: hidden; }
