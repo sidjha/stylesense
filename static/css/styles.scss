@@ -14,6 +14,12 @@ $basefont: Helvetica, Arial, sans-serif;
 	-webkit-opacity: $val;
 }
 
+@mixin rounded-border($rad) {
+	border-radius: $rad;
+	-moz-border-radius: $rad;
+	-webkit-border-radius: $rad;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -216,12 +222,13 @@ $footer_fontsize: 2em;
 	display: none;
 }
 
+$emerald: #2ecc71;
 .score {
 	width: 100%;
 	padding: 10px 60px 0 60px;
 	background: none;
-	border-top: 3px solid #2ecc71;
-	border-bottom: 3px solid #2ecc71;
+	border-top: 3px solid $emerald;
+	border-bottom: 3px solid $emerald;
 	display: none;
 	font-family: $basefont;
 }
@@ -265,7 +272,8 @@ $results_dim: 150px;
 }
 
 .winner {
-	background: yellow;
+	border: 3px solid $emerald;
+	@include rounded-border(12px);
 }
 
 .score_header {

@@ -197,7 +197,10 @@ a, a:visited {
   padding: 20px; }
 
 .winner {
-  background: yellow; }
+  border: 3px solid #2ecc71;
+  border-radius: 12px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px; }
 
 .score_header {
   font-weight: 300;

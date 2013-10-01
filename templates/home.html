@@ -65,7 +65,7 @@
 	<div class="score" id="score">
 				<h2 class="score_header">Last Round</h2>
 				<div class="row">
-					<div class="col-2-5 result_col">
+					<div class="col-2-5 result_col" id="result1">
 						<a class="thumbLink" id="thumbLink1" target="_blank">
 							<img id="thumbImg1" class="thumbImg">
 						</a>
@@ -77,7 +77,7 @@
 					<div class="col-1-5">
 					
 					</div>
-					<div class="col-2-5 result_col">
+					<div class="col-2-5 result_col" id="result2">
 						<a class="thumbLink" id="thumbLink2" target="_blank">
 							<img id="thumbImg2" class="thumbImg">
 						</a>
@@ -229,16 +229,20 @@
     	$('#thumbUser1').html('@' + prev_round.player1.username).attr('href', 'http://instagram.com/' + prev_round.player1.username);
     	$('#thumbUser2').html('@' + prev_round.player2.username).attr('href', 'http://instagram.com/' + prev_round.player2.username);
     	if (prev_round.winner.obj_id == prev_round.player1.obj_id) {
+    		$('#result2').removeClass('winner');
     		$('#wins1').html(prev_round.player1.wins + 1);
     		$('#losses1').html(prev_round.player1.losses);
     		$('#wins2').html(prev_round.player2.wins);
     		$('#losses2').html(prev_round.player2.losses + 1);
+    		$('#result1').addClass('winner');
     	}
     	else {
+    		$('#result1').removeClass('winner');
     		$('#wins1').html(prev_round.player1.wins);
     		$('#losses1').html(prev_round.player1.losses + 1);
     		$('#wins2').html(prev_round.player2.wins + 1);
     		$('#losses2').html(prev_round.player2.losses);
+    		$('#result2').addClass('winner');
     	}
     	$('#score').fadeIn();
     }
