@@ -4,10 +4,8 @@ from parse_rest.query import QueryResourceDoesNotExist
 
 import json, httplib, urllib
 
-#PARSE_APPLICATION_ID = 'GGEI1UGiW8CqKXqovHbt4w9ajoJIVZl7N2uJwdDB'
-#PARSE_REST_API_KEY = 'ihituXdUkmnFDZaOu1M44FC4GFQ82ryKZkTx6KYO'
-PARSE_APPLICATION_ID = 'pcWvIBPmiTIsMPQzC4xv9cFXrjJTqrYutpZto34P'
-PARSE_REST_API_KEY = 'sxPV488nf5XYNzv50RLoWKeTCIDKBqJhXYYLsuEb'
+PARSE_APPLICATION_ID = 'GGEI1UGiW8CqKXqovHbt4w9ajoJIVZl7N2uJwdDB'
+PARSE_REST_API_KEY = 'ihituXdUkmnFDZaOu1M44FC4GFQ82ryKZkTx6KYO'
 
 def get_new_player(index):
   connection = httplib.HTTPSConnection('api.parse.com', 443)
