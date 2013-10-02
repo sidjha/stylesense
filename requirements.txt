@@ -5,7 +5,7 @@ Werkzeug==0.9.4
 gunicorn==18.0
 httplib2==0.8
 itsdangerous==0.23
-parse-rest==0.2.20130312
+git+https://github.com/dgrtwo/ParsePy.git
 python-instagram==0.8.0
 simplejson==3.3.0
 wsgiref==0.1.2
