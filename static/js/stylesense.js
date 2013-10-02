@@ -119,7 +119,9 @@
   	prev_round = cur_round;
   	prev_round.clear_();
   	new_round();
-  	return false;
+    ga('send', 'event', 'button', 'click', 'skip button', 1);
+  	console.log('click.');
+    return false;
   });
 
   function show_results() {
