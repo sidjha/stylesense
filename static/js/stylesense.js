@@ -122,8 +122,8 @@
   	new_round();
     skipCount++;
     
-    var round_players = [prev_round.player1.obj_id, prev_round.player2.obj_id];
-    ga('send', 'event', 'button', 'click', 'skip button', {'RoundPlayers': round_players, 'SkipCount': skipCount});
+    var round_players = prev_round.player1.obj_id + '&' + prev_round.player2.obj_id;
+    ga('send', 'event', 'Round', 'Skipped', round_players, skipCount);
     return false;
   });
 
