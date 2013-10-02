@@ -5,7 +5,6 @@ from parse_rest.connection import ParseBatcher
 
 import time
 
-POLL_DELAY = 60 # in seconds
 FOLLOWER_THRESHOLD = 200
 
 api = None
@@ -91,12 +90,7 @@ def poll():
 
 
 if __name__ == "__main__":
-  print "Starting Instagram poller. Poll delay: %d" % POLL_DELAY
-
   api = InstagramAPI(INSTAGRAM_CLIENT_ID, INSTAGRAM_CLIENT_SECRET)
   parse = Parse()
 
-  while True:
-    poll()
-    print '-' * 20
-    time.sleep(POLL_DELAY)
+  poll()
