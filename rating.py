@@ -1,25 +1,22 @@
-# Elo Rating System constants
-BASE_RATING = 1400
-KC = 32
-WIN = 1
-LOSS = 0
+from datetime import datetime, timedelta
+from math import log
 
-def update_rating(rating1, rating2, result):
-    pl_one = rating1.rating
-    pl_two = rating2.rating
+epoch = datetime(1970, 1, 1)
 
-    eA = 1 / (1 + 10**((pl_two - pl_one)/400))
-    eB = 1 / (1 + 10**((pl_one - pl_two)/400))
+def _epoch_seconds(date):
+  """Returns the number of seconds from the epoch to date."""
+  td = date - epoch
+  return td.days * 86400 + td.seconds + (float(td.microseconds) / 1000000)
 
-    print "expected: ", eA, eB
+def _score(wins, losses):
+  return wins - losses
 
-    if result == 'win':
-        pl_one = pl_one + KC*(WIN - eA)
-        pl_two = pl_two + KC*(LOSS - eB)
-        print "pl_one: %d, pl_two: %d" % (pl_one, pl_two)
-    if result == 'loss':
-        pl_one = pl_one + KC*(LOSS - eA)
-        pl_two = pl_two + KC*(WIN - eB)
-        print "pl_one: %d, pl_two: %d" % (pl_one, pl_two)
+def hot(wins, losses, date):
+  """The hot formula"""
+  website_launch_time = 1380585600
+  s = _score(wins, losses)
+  order = log(max(abs(s), 1), 10)
+  sign = 1 if s > 0 else -1 if s < 0 else 0
+  seconds = _epoch_seconds(date) - website_launch_time
 
-    return [pl_one, pl_two]
+  return round(order + sign * seconds / 45000, 7)

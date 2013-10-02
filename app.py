@@ -3,7 +3,7 @@ from flask import Flask, request, render_template, json, url_for, redirect, sess
 from parse import Media, Parse, Rating, get_new_player
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
-from rating import BASE_RATING, KC, WIN, LOSS, update_rating
+from rating import hot
 from apputils import LinkedRand
 
 import ast, urllib, urllib2, os, urlparse, time
@@ -79,12 +79,6 @@ def tally_round():
 
     print photo1, photo2, winner
 
-    result = None
-    if winner == photo1:
-        result = 'win'
-    if winner == photo2:
-        result = 'loss'
-
     # verify that media exists
     try:
         photo1 = Media.Query.get(objectId=photo1)
@@ -99,28 +93,32 @@ def tally_round():
     try:
         rating1 = Rating.Query.get(mediaId=photo1.objectId)
     except QueryResourceDoesNotExist:
-        rating1 = Rating(rating=BASE_RATING, mediaId=photo1.objectId)
+	rating1 = Rating(rating=0, mediaId=photo1.objectId, wins=0, losses=0)
 
     try:
         rating2 = Rating.Query.get(mediaId=photo2.objectId)
     except QueryResourceDoesNotExist:
-        rating2 = Rating(rating=BASE_RATING, mediaId=photo2.objectId)
+	rating2 = Rating(rating=0, mediaId=photo2.objectId, wins=0, losses=0)
 
-    ratings = update_rating(rating1, rating2, result)
-    rating1.rating = ratings[0]
-    rating2.rating = ratings[1]
+    result = None
 
-    if result == 'win':
-        photo1.wins = photo1.wins + 1
-        photo2.losses = photo2.losses + 1
-        
-    if result == 'loss':
-        photo2.wins = photo2.wins + 1
-        photo1.losses = photo1.losses + 1
+    if winner == photo1.objectId:
+      result = 'win'
+      photo1.wins += 1
+      photo2.losses += 1
+
+    if winner == photo2.objectId:
+      result = 'loss'
+      photo2.wins += 1
+      photo1.losses += 1
+
+    # update score of winner and loser
+    rating1.rating = hot(photo1.wins, photo1.losses, photo1.createdAt)
+    rating2.rating = hot(photo2.wins, photo2.losses, photo2.createdAt)
 
     # save all objects at once
     objects = [rating1, rating2, photo1, photo2]
-    
+
     try:
         batcher = ParseBatcher()
         batcher.batch_save(objects)
@@ -137,16 +135,15 @@ def new_round():
     players = []
 
     for player in new_players:
-      #images = ast.literal_eval(player['images'])
       image = player['lowResolutionUrl']
       username = player['username']
       link = player['link']
       wins = player['wins']
       losses = player['losses']
-      players.append({'objectId': player['objectId'], 
-                      'image': image, 
-                      'username': username, 
-                      'link': link, 
+      players.append({'objectId': player['objectId'],
+		      'image': image,
+		      'username': username,
+		      'link': link,
                       'wins': wins,
                       'losses': losses})
 
@@ -156,7 +153,6 @@ def new_round():
 
 @app.route("/leaderboard")
 def get_leaderboard():
-    import leaderboard
     leaders = leaderboard.get_leaderboard(5)
     return json.dumps(leaders)
 
