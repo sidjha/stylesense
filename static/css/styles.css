@@ -40,7 +40,9 @@ a, a:visited {
 .info {
   font-size: 2.5em;
   line-height: 2em;
-  font-weight: 300; }
+  font-weight: 300;
+  padding: 0;
+  margin: 0; }
   @media only screen and (max-device-width: 320px) {
     .info {
       font-size: 1.2em;
@@ -140,6 +142,10 @@ a, a:visited {
 .title {
   text-align: center;
   width: 100%; }
+  .title a, .title a:visited {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000; }
 
 .subtitle {
   text-align: center;
@@ -320,6 +326,18 @@ a, a:visited {
   @media only screen and (max-device-width: 320px) {
     .leaderboard_header {
       font-size: 1em; } }
+
+.see_winners {
+  font-size: 1.2em;
+  text-align: center;
+  margin: 5px auto;
+  font-weight: 300;
+  display: none; }
+  .see_winners a, .see_winners a:visited {
+    color: #2ecc71; }
+  @media only screen and (max-device-width: 320px) {
+    .see_winners {
+      font-size: 0.8em; } }
 
 .ig-b- {
   display: block;

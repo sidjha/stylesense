@@ -75,7 +75,8 @@ a, a:visited {
 	font-size: 2.5em;
 	line-height: 2em;
 	font-weight: 300;
-
+	padding: 0;
+	margin: 0;
 
 	@media only screen and (max-device-width: 320px) {
 		font-size: 1.2em;
@@ -199,6 +200,11 @@ a, a:visited {
 .title {
 	text-align: center;
 	width: 100%;
+	a, a:visited {
+		text-decoration: none;
+		font-weight: bold;
+		color: #000;
+	}
 }
 
 .subtitle {
@@ -427,6 +433,21 @@ $stats-color: #fff;
 
 	@media only screen and (max-device-width: 320px) {
 		font-size: 1em;
+	}
+}
+
+.see_winners {
+	font-size: 1.2em;
+	text-align: center;
+	margin: 5px auto;
+	font-weight: 300;
+	display: none;
+	a, a:visited {
+		color: $fgcolor;
+	}
+	
+	@media only screen and (max-device-width: 320px) {
+		font-size: 0.8em;
 	}
 }
 

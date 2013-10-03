@@ -3,7 +3,7 @@
 <head>
 	<title>Stylesense</title>
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="/static/css/styles.css?f" type="text/css">
+	<link rel="stylesheet" href="/static/css/styles.css?i" type="text/css">
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/grids-min.css">
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </head>
@@ -15,7 +15,8 @@
 	<div class="main">
 		<div class="content">
 
-			<h2 class="info title">Which outfit is better?</h2>
+			<h2 class="info title">Which <a href="http://www.urbandictionary.com/define.php?term=OOTD" title="outfit of the day" target="_blank">#ootd</a> is better? Pick one</h2>
+			<h2 class="see_winners" id="see_winners"><a href="#leaderboard_header">(See who's winning)</a></h2>
 			<div class="battle_wrap">
 
 				<div class="pure-g" id="photos">
@@ -29,7 +30,7 @@
 
 					</div>
 					<div class="pure-u-1-5 skip_col pure-hidden-phone">
-						<span class="vs pure-hidden-phone">vs</span><a id="skip" class="skip" href="#">Skip</a>
+						<a id="skip" class="skip" href="#">Skip</a>
 					</div>
 					<div class="pure-u-2-5 pic2_col">
 						<img src="/static/img/ph.gif" id="photo2" onerror="new_round();">

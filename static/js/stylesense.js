@@ -190,4 +190,5 @@
   	$('#copyright').css('margin-top', '50px');
   	$('#leaderboard_header').fadeIn();
   	$('#leaderboard').fadeIn();
+    $('#see_winners').fadeIn();
   }
