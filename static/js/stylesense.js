@@ -32,6 +32,17 @@
       $('#metadata2').fadeOut();
     }
 
+    this.skip = function() {
+      $.ajax({
+	url: '/skip_round',
+	method: 'POST',
+	data: {
+	  photo1: this.player1.obj_id,
+	  photo2: this.player2.obj_id
+	}
+      });
+    }
+
     this.save = function(obj) {
       $.ajax({
         url: '/tally_round',
@@ -117,11 +128,13 @@
   });
 
   $('#skip').on('click', function() {
-  	prev_round = cur_round;
-  	prev_round.clear_();
-  	new_round();
+    cur_round.skip();
+
+    prev_round = cur_round;
+    prev_round.clear_();
+    new_round();
     skipCount++;
-    
+
     var round_players = prev_round.player1.obj_id + '&' + prev_round.player2.obj_id;
     ga('send', 'event', 'Round', 'Skipped', round_players, skipCount);
     return false;
@@ -190,5 +203,5 @@
   	$('#copyright').css('margin-top', '50px');
   	$('#leaderboard_header').fadeIn();
   	$('#leaderboard').fadeIn();
-    $('#see_winners').fadeIn();
+        $('#see_winners').fadeIn();
   }

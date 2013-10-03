@@ -1,10 +1,10 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
-from parse import Media, Parse, Rating, get_new_player
+from parse import Media, Parse, Rating, Skip, get_new_player
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
 from rating import hot
-from apputils import LinkedRand
+from apputils import LinkedRand, verify_form_field, fetch_or_initialize_class, parse_save_batch_objects
 
 import ast, urllib, urllib2, os, urlparse, time
 
@@ -60,45 +60,66 @@ def logged_in():
     return render_template('join.html', user=session['user'])
 
 
+@app.route("/skip_round", methods=['POST'])
+def skip_round():
+  photo1 = 'photo1'
+  photo2 = 'photo2'
+
+  try:
+    photo1 = verify_form_field(photo1, request)
+    photo2 = verify_form_field(photo2, request)
+  except ValueError:
+    return json.dumps({"errorMsg": "Invalid form data"}), 400
+
+  try:
+    photo1 = Media.Query.get(objectId=photo1)
+    photo2 = Media.Query.get(objectId=photo2)
+  except QueryResourceDoesNotExist:
+    return json.dumps({"errorMsg": "Invalid photo data"}), 400
+
+  # update skip counters
+  skip1 = fetch_or_initialize_class(Skip, photo1.objectId)
+  skip2 = fetch_or_initialize_class(Skip, photo2.objectId)
+
+  for skip in [skip1, skip2]:
+    if not skip.objectId:
+      skip.skips = 1
+    else:
+      skip.skips += 1
+
+  try:
+    parse_save_batch_objects([skip1, skip2])
+  except Exception as e:
+    print e
+    return json.dumps({"errorMsg": "Votes could not be saved."}), 400
+
+  return json.dumps({"success": True}), 200
+
+
 @app.route("/tally_round", methods=['POST'])
 def tally_round():
-    photo1 = None
-    photo2 = None
-    winner = None
+    photo1 = 'photo1'
+    photo2 = 'photo2'
+    winner = 'winner'
 
-    if 'photo1' in request.form and 'photo2' in request.form and 'winner' in request.form:
-        photo1 = request.form['photo1']
-        photo2 = request.form['photo2']
-        winner = request.form['winner']
-
-        # validate POST data for security
-        if len(photo1) == 0 or len(photo2) == 0 or len(winner) == 0:
-            return json.dumps({"errorMsg": "Invalid data"}), 400
-    else:
-        return json.dumps({"errorMsg": "Invalid data"}), 400
+    try:
+      photo1 = verify_form_field(photo1, request)
+      photo2 = verify_form_field(photo2, request)
+      winner = verify_form_field(winner, request)
+    except ValueError:
+      return json.dumps({"errorMsg": "Invalid form data"}), 400
 
     print photo1, photo2, winner
 
     # verify that media exists
     try:
-        photo1 = Media.Query.get(objectId=photo1)
-        photo2 = Media.Query.get(objectId=photo2)
+      photo1 = Media.Query.get(objectId=photo1)
+      photo2 = Media.Query.get(objectId=photo2)
     except QueryResourceDoesNotExist:
-        return json.dumps({"errorMsg": "Invalid data"}), 400
+      return json.dumps({"errorMsg": "Invalid photo data"}), 400
 
-    rating1 = None
-    rating2 = None
-
-    # if rating exists already, update it
-    try:
-        rating1 = Rating.Query.get(mediaId=photo1.objectId)
-    except QueryResourceDoesNotExist:
-	rating1 = Rating(rating=0, mediaId=photo1.objectId, wins=0, losses=0)
-
-    try:
-        rating2 = Rating.Query.get(mediaId=photo2.objectId)
-    except QueryResourceDoesNotExist:
-	rating2 = Rating(rating=0, mediaId=photo2.objectId, wins=0, losses=0)
+    rating1 = fetch_or_initialize_class(Rating, photo1.objectId)
+    rating2 = fetch_or_initialize_class(Rating, photo2.objectId)
 
     result = None
 
@@ -117,14 +138,11 @@ def tally_round():
     rating2.rating = hot(photo2.wins, photo2.losses, photo2.createdAt)
 
     # save all objects at once
-    objects = [rating1, rating2, photo1, photo2]
-
     try:
-        batcher = ParseBatcher()
-        batcher.batch_save(objects)
+      parse_save_batch_objects([rating1, rating2, photo1, photo2])
     except Exception as e:
-        print e
-        return json.dumps({"errorMsg": "Votes could not be saved."}), 400
+      print e
+      return json.dumps({"errorMsg": "Votes could not be saved."}), 400
 
     return json.dumps({"success": True}), 200
 
