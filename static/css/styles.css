@@ -25,23 +25,22 @@ a, a:visited {
   padding: 10px 20px;
   font-family: Helvetica, Arial, sans-serif;
   font-weight: 300; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .content {
       padding: 10px 10px; } }
 
 .main {
   width: 100%;
   min-height: 400px; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .main {
-      margin-top: 80px;
       width: 100%; } }
 
 .info {
   font-size: 2.5em;
   line-height: 2em;
   font-weight: 300; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .info {
       font-size: 1.2em;
       line-height: 1em;
@@ -88,14 +87,21 @@ a, a:visited {
   text-align: center;
   font-size: 1.8em;
   height: 400px; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .pic1_col, .pic2_col {
       height: 220px;
       margin-bottom: 10px; } }
 
+@media only screen and (min-width: 320px) {
+  .pic2_col {
+    padding-left: 30px; } }
+
+/*
 @media only screen and (max-device-width: 320px) {
-  .pic1_col {
-    border-bottom: 1px solid #000; } }
+	.pic1_col {
+		border-bottom: 1px solid #000;
+	}
+} */
 #photo1, #photo2 {
   width: 306px;
   height: 306px; }
@@ -112,10 +118,6 @@ a, a:visited {
   text-align: center;
   font-size: 1.4em;
   padding-top: 8%; }
-  @media only screen and (max-device-width: 320px) {
-    .skip_col {
-      position: absolute;
-      top: 0px; } }
 
 .skip, .skip:visited {
   display: block;
@@ -130,7 +132,7 @@ a, a:visited {
   .skip:hover, .skip:visited:hover {
     color: #000;
     border: 5px solid #000; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .skip, .skip:visited {
       width: 80%; } }
 
@@ -148,7 +150,7 @@ a, a:visited {
 
 .row {
   margin: 10px auto;
-  max-width: 950px; }
+  min-width: 950px; }
 
 .photos {
   height: 306px; }
@@ -163,7 +165,7 @@ a, a:visited {
   color: #fff;
   font-size: 2em;
   line-height: 1.8em; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .brief {
       font-size: 1em;
       line-height: 1.1em; } }
@@ -185,7 +187,7 @@ a, a:visited {
 
 .metadata {
   text-align: center; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .metadata {
       height: 60px; } }
 
@@ -194,7 +196,7 @@ a, a:visited {
   color: #3f729b;
   font-weight: 200;
   text-decoration: none; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .user_link, .user_link:visited {
       font-size: 14px;
       padding: 0;
@@ -290,14 +292,14 @@ a, a:visited {
   font-weight: 300;
   color: #fff;
   display: none; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .leaderboard_header {
       font-size: 1em; } }
 
 .ig-b- {
   display: block;
   margin: 10px auto; }
-  @media only screen and (max-device-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .ig-b- {
       margin: 0 auto; } }
 
