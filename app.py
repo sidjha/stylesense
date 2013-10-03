@@ -14,8 +14,11 @@ app.secret_key = 'some_random_secret'
 assets = Environment(app)
 parse = Parse()
 
-js = Bundle('js/stylesense.js', filters='jsmin', output='static/js/jsmin.js')
+js = Bundle('js/stylesense.js', filters='jsmin', output='js/jsmin.js')
 assets.register('js_all', js)
+
+css = Bundle('css/styles.css', 'css/grids.css', filters='cssmin', output='css/cssmin.css')
+assets.register('css_all', css)
 
 import leaderboard
 

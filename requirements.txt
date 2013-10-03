@@ -11,3 +11,4 @@ simplejson==3.3.0
 wsgiref==0.1.2
 Flask-Assets==0.8
 jsmin==2.0.4
+cssmin==0.1.4

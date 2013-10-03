@@ -3,3 +3,5 @@
 stylsns_env/
 .DS_Store
 static/.webassets-cache/
+jsmin.js
+cssmin.css
