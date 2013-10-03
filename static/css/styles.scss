@@ -67,6 +67,7 @@ a, a:visited {
 	min-height: 400px;
 	@media only screen and (min-width: 320px) {
 		width: 100%;
+		min-height: 250px;
 	}
 }
 
@@ -158,8 +159,8 @@ a, a:visited {
 	height: 306px;
 
 	@media only screen and (max-device-width: 320px) {
-		width: 150px;
-		height: 150px;
+		width: 140px;
+		height: 140px;
 	}
 }
 
@@ -273,14 +274,15 @@ $footer_fontsize: 2em;
 	font-weight: 200;
 	text-decoration: none;
 	@media only screen and (min-width: 320px) {
-		font-size: 14px;
+		font-size: 12px;
 		padding: 0;
 		margin: 0;
+		line-height: 0.8em;
 	}
 }
 
 .by {
-	font-size: 18px;
+	font-size: 12px;
 	font-weight: bold;
 	color: #d4d4d4;
 }
@@ -298,6 +300,9 @@ $footer_fontsize: 2em;
 	border-bottom: 3px solid $fgcolor;
 	display: none;
 	font-family: $basefont;
+	@media only screen and (min-width: 320px) {
+		padding: 20px 5px 20px 5px;
+	}
 }
 
 $results_dim: 150px;
@@ -310,6 +315,14 @@ $results_dim: 150px;
 		width: $results_dim;
 		height: $results_dim;
 		vertical-align: bottom;
+		@media only screen and (min-width: 320px) {
+			width: $results_dim/2;
+			height: $results_dim/2;
+		}
+	}
+	@media only screen and (min-width: 320px) {
+		width: $results_dim/2;
+		height: $results_dim/2;
 	}
 }
 
@@ -350,6 +363,10 @@ $results_dim: 150px;
 	display: none;
 	font-family: $basefont;
 	margin: 0;
+
+	@media only screen and (min-width: 320px) {
+		font-size: 1.4em;
+	}
 }
 
 $leader-dim: 150px;

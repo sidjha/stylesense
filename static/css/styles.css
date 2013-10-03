@@ -34,7 +34,8 @@ a, a:visited {
   min-height: 400px; }
   @media only screen and (min-width: 320px) {
     .main {
-      width: 100%; } }
+      width: 100%;
+      min-height: 250px; } }
 
 .info {
   font-size: 2.5em;
@@ -107,8 +108,8 @@ a, a:visited {
   height: 306px; }
   @media only screen and (max-device-width: 320px) {
     #photo1, #photo2 {
-      width: 150px;
-      height: 150px; } }
+      width: 140px;
+      height: 140px; } }
 
 .user1_col, .user2_col {
   text-align: center;
@@ -198,12 +199,13 @@ a, a:visited {
   text-decoration: none; }
   @media only screen and (min-width: 320px) {
     .user_link, .user_link:visited {
-      font-size: 14px;
+      font-size: 12px;
       padding: 0;
-      margin: 0; } }
+      margin: 0;
+      line-height: 0.8em; } }
 
 .by {
-  font-size: 18px;
+  font-size: 12px;
   font-weight: bold;
   color: #d4d4d4; }
 
@@ -218,6 +220,9 @@ a, a:visited {
   border-bottom: 3px solid #2ecc71;
   display: none;
   font-family: Helvetica, Arial, sans-serif; }
+  @media only screen and (min-width: 320px) {
+    .score {
+      padding: 20px 5px 20px 5px; } }
 
 .thumbLink {
   display: inline-block;
@@ -227,6 +232,14 @@ a, a:visited {
     width: 150px;
     height: 150px;
     vertical-align: bottom; }
+    @media only screen and (min-width: 320px) {
+      .thumbLink img {
+        width: 75px;
+        height: 75px; } }
+  @media only screen and (min-width: 320px) {
+    .thumbLink {
+      width: 75px;
+      height: 75px; } }
 
 .thumbData {
   text-align: left;
@@ -259,6 +272,9 @@ a, a:visited {
   display: none;
   font-family: Helvetica, Arial, sans-serif;
   margin: 0; }
+  @media only screen and (min-width: 320px) {
+    .score_header {
+      font-size: 1.4em; } }
 
 .leaderboard {
   display: none; }
