@@ -1,5 +1,6 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
+from flask.ext.assets import Environment, Bundle
 from parse import Media, Parse, Rating, Skip, get_new_player
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
@@ -10,7 +11,14 @@ import ast, urllib, urllib2, os, urlparse, time
 
 app = Flask(__name__)
 app.secret_key = 'some_random_secret'
+assets = Environment(app)
 parse = Parse()
+
+js = Bundle('js/stylesense.js', filters='jsmin', output='js/jsmin.js')
+assets.register('js_all', js)
+
+css = Bundle('css/styles.css', 'css/grids.css', filters='cssmin', output='css/cssmin.css')
+assets.register('css_all', css)
 
 import leaderboard
 

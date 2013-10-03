@@ -9,5 +9,6 @@ git+https://github.com/dgrtwo/ParsePy.git
 python-instagram==0.8.0
 simplejson==3.3.0
 wsgiref==0.1.2
-supervisor==3.0
-watchdog==0.6.0
+Flask-Assets==0.8
+jsmin==2.0.4
+cssmin==0.1.4
