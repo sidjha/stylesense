@@ -1,6 +1,6 @@
 from parse import Media, Parse, Rating
 from app import parse
-from apputils import LinkedRand, parse_save_batch_objects
+from apputils import LinkedRand, parse_save_batch_objects, fetch_or_initialize_class
 from rating import hot
 
 def run_bot():
@@ -27,8 +27,10 @@ def run_bot():
 
 	ratings = []
 	for photo in photos:
-		rating = Rating.Query.get(mediaId=photo.objectId)
+		rating = fetch_or_initialize_class(Rating, photo.objectId)
 		rating.rating = hot(photo.wins, photo.losses, photo.createdAt)
 		ratings.append(rating)
+
+	print ratings
 
 	parse_save_batch_objects(ratings)
