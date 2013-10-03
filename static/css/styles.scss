@@ -179,10 +179,10 @@ a, a:visited {
 
 .skip, .skip:visited {
 	display: block;
-	width: 100px;
+	width: 80%;
 	border: 5px solid $fgcolor;
 	color: $fgcolor;
-	text-transform: uppercase;
+	text-transform: lowercase;
 	text-decoration: none;
 	font-weight: bold;
 	padding: 15px;
