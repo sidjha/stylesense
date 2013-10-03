@@ -88,7 +88,9 @@
 		</div>
 		<p class="copyright" id="copyright">&copy; 2013 Stylesen.se. Handmade in Canada by <a href="http://twitter.com/aam1r" target="_blank">@aam1r</a> and <a href="http://twitter.com/sidjha" target="_blank">@sidjha</a>. Stylesen.se uses the Instagram API but isn't endorsed by Instagram in any way.</p>
 	</div>
-	<script src="/static/js/stylesense.js"></script>
+	{% assets "js_all" %}
+	  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+	{% endassets %}
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
