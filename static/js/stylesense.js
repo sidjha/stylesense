@@ -180,7 +180,6 @@
   	$.getJSON('/leaderboard', function(data) {
   		for(var i=0; i < data.length; i++) {
   			leaders.push(new Leader(data[i]));
-  			console.log(leaders);
   		}
   		render_leaderboard(leaders);
   	});
