@@ -141,6 +141,15 @@ a, a:visited {
   text-align: center;
   width: 100%; }
 
+.subtitle {
+  text-align: center;
+  font-size: 1.5em;
+  line-height: 1em;
+  width: 100%; }
+
+.subtitle a {
+  color: black; }
+
 .col-2-5 {
   width: 400px;
   display: inline-block; }
