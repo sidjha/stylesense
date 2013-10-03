@@ -6,8 +6,8 @@ def run_bot():
 	photos = []
 
 	count = Media.Query.all().count()
-	dataset_size = (count*0.05)
-	dataset = Media.Query.all().limit(count*0.05)
+	dataset_size = int(count*0.05)
+	dataset = Media.Query.all().limit(dataset_size)
 
 	for photo in dataset:
 		photo.wins = photo.wins + 1
