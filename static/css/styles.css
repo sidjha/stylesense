@@ -212,7 +212,7 @@ a, a:visited {
   font-family: "proxima-nova", Helvetica, Arial, sans-serif;
   font-weight: 300; }
   .copyright a, .copyright a:visited {
-    color: #fff; }
+    color: #000; }
 
 .metadata {
   text-align: center; }
