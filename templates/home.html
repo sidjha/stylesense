@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 	<title>Stylesense</title>
+
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="/static/css/styles.css?i" type="text/css">
+	<link rel="stylesheet" href="/static/css/styles.css?f" type="text/css">
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/grids-min.css">
+	<script type="text/javascript" src="//use.typekit.net/nfx1eva.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </head>
 
@@ -22,9 +26,8 @@
 				<div class="pure-g" id="photos">
 					<div class="pure-u-2-5 pic1_col" id="photo1_wrap">
 						<img src="/static/img/ph.gif" id="photo1" onerror="new_round();" title="Click to vote!">
-						<!--<img src="http://placehold.it/306x306" class="photo1_bg">-->
 						<div id="metadata1" class="metadata">
-							<a id="link1" href="" class="ig-b- ig-b-v-24" target="_blank"><img src="//badges.instagram.com/static/images/ig-badge-view-24.png" alt="Instagram" /></a>
+							<a id="link1" href="" class="view_ig" target="_blank">View on Instagram</a>
 							<span class="by">by</span> <a id="user1" class="user_link" target="_blank"></a>
 						</div>
 
@@ -34,9 +37,8 @@
 					</div>
 					<div class="pure-u-2-5 pic2_col">
 						<img src="/static/img/ph.gif" id="photo2" onerror="new_round();" title="Click to vote!">
-						<!--<img src="http://placehold.it/306x306" class="photo1_bg">-->
 						<div id="metadata2" class="metadata">
-							<a id="link2" href="" class="ig-b- ig-b-v-24" target="_blank"><img src="//badges.instagram.com/static/images/ig-badge-view-24.png" alt="Instagram" /></a>
+							<a id="link2" href="" class="view_ig" target="_blank">View on Instagram</a>
 							<span class="by">by</span> <a id="user2" class="user_link" target="_blank"></a>
 						</div>
 					</div>
@@ -46,24 +48,28 @@
 		</div>
 	</div>
 	
-	<h2 class="score_header content" id="score-header">Last Round</h2></div>
+	<h2 class="score_header content" id="score-header">Stats from Last Round</h2></div>
 	<div class="pure-g score" id="score" style="display: none;">
-		<div class="pure-u-1-2 result_col" id="result1">
-			<a class="thumbLink" id="thumbLink1" target="_blank">
-				<img id="thumbImg1" class="thumbImg">
-			</a>
-			<div class="thumbData">
-				<a class="thumbUser" id="thumbUser1" target="_blank">asdfasdf</a>
-				<div class="votes"><div id="wins1">22</div> wins / <div id="losses1">10</div> losses</div>
+		<div class="pure-u-1-2 result_col">
+			<div class="result_content" id="result1">
+				<a class="thumbLink" id="thumbLink1" target="_blank">
+					<img id="thumbImg1" class="thumbImg">
+				</a>
+				<div class="thumbData">
+					<a class="thumbUser" id="thumbUser1" target="_blank">asdfasdf</a>
+					<div class="votes"><div id="wins1">22</div> wins / <div id="losses1">10</div> losses</div>
+				</div>
 			</div>
 		</div>
-		<div class="pure-u-1-2 result_col" id="result2">
-			<a class="thumbLink" id="thumbLink2" target="_blank">
-				<img id="thumbImg2" class="thumbImg">
-			</a>
-			<div class="thumbData">
-				<a class="thumbUser" id="thumbUser2" target="_blank">asdfasfd</a>
-				<div class="votes"><div id="wins2">22</div> wins / <div id="losses2">10</div> losses</div>
+		<div class="pure-u-1-2 result_col">
+			<div class="result_content" id="result2">
+				<a class="thumbLink" id="thumbLink2" target="_blank">
+					<img id="thumbImg2" class="thumbImg">
+				</a>
+				<div class="thumbData">
+					<a class="thumbUser" id="thumbUser2" target="_blank">asdfasfd</a>
+					<div class="votes"><div id="wins2">22</div> wins / <div id="losses2">10</div> losses</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -73,7 +79,7 @@
 			<h3 id="leaderboard_header" class="leaderboard_header">Who's winning</h3>
 			<div id="leaderboard" class="pure-g-r leaderboard"></div>
 		</div>
-		<p class="copyright" id="copyright">&copy; 2013 Stylesen.se. Handmade in Canada by <a href="http://twitter.com/aam1r">@aam1r</a> and <a href="http://twitter.com/sidjha">@sidjha</a>.</p>
+		<p class="copyright" id="copyright">&copy; 2013 Stylesen.se. Handmade in Canada by <a href="http://twitter.com/aam1r" target="_blank">@aam1r</a> and <a href="http://twitter.com/sidjha" target="_blank">@sidjha</a>.</p>
 	</div>
 	<script src="/static/js/stylesense.js"></script>
 	<script>

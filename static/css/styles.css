@@ -4,7 +4,13 @@
 body {
   padding: 0;
   margin: 0;
-  width: 100%; }
+  width: 100%;
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif; }
+
+.pure-g [class*="pure-u"],
+.pure-g-r [class*="pure-u"] {
+  /* Set you're content font stack here: */
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif !important; }
 
 a, a:visited {
   color: red; }
@@ -13,7 +19,13 @@ a, a:visited {
   width: 100%; }
   .header a, .header a:visited {
     color: #000;
-    text-decoration: none; }
+    text-decoration: none;
+    font-size: 2.5em;
+    font-weight: 200;
+    color: #2ecc71; }
+    @media only screen and (max-device-width: 320px) {
+      .header a, .header a:visited {
+        font-size: 1.5em; } }
 
 .my_stats {
   text-align: right;
@@ -23,7 +35,7 @@ a, a:visited {
 
 .content {
   padding: 10px 20px;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif;
   font-weight: 300; }
   @media only screen and (max-device-width: 320px) {
     .content {
@@ -131,7 +143,8 @@ a, a:visited {
   text-decoration: none;
   font-weight: bold;
   padding: 15px;
-  margin: 30px auto; }
+  margin: 30px auto;
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif; }
   .skip:hover, .skip:visited:hover {
     color: #000;
     border: 5px solid #000; }
@@ -196,7 +209,7 @@ a, a:visited {
   width: 100%;
   margin: 0;
   padding: 20px 20px;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif;
   font-weight: 300; }
   .copyright a, .copyright a:visited {
     color: #fff; }
@@ -229,15 +242,17 @@ a, a:visited {
 
 .score {
   width: 100%;
-  padding: 20px 60px 20px 60px;
+  padding: 0;
   background: none;
   border-top: 3px solid #2ecc71;
   border-bottom: 3px solid #2ecc71;
   display: none;
-  font-family: Helvetica, Arial, sans-serif; }
-  @media only screen and (max-device-width: 320px) {
-    .score {
-      padding: 20px 5px 20px 5px; } }
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif; }
+
+.result_content {
+  margin: 20px 60px 20px 20px;
+  padding: 20px 0;
+  width: 90%; }
 
 .thumbLink {
   display: inline-block;
@@ -259,21 +274,41 @@ a, a:visited {
 .thumbData {
   text-align: left;
   display: inline-block;
-  height: 50px; }
+  height: 86px;
+  margin-top: -10px auto; }
+  @media only screen and (max-device-width: 320px) {
+    .thumbData {
+      margin: 0 auto;
+      height: 56px;
+      padding: 0 10px; } }
 
-.thumbUser {
+.thumbUser, .thumbUser:visited {
   height: 75px;
-  font-size: 1.1em; }
+  font-size: 1.1em;
+  color: #3f729b; }
+  @media only screen and (max-device-width: 320px) {
+    .thumbUser, .thumbUser:visited {
+      font-size: 0.8em; } }
 
 .votes {
-  font-size: 1.1em;
-  height: 15px; }
+  font-size: 2em;
+  height: 65px;
+  font-weight: 300; }
+  @media only screen and (max-device-width: 320px) {
+    .votes {
+      font-size: 1.2em;
+      height: 35px; } }
   .votes div {
-    display: inline-block; }
+    display: inline-block;
+    font-weight: 400;
+    font-size: 2em; }
+    @media only screen and (max-device-width: 320px) {
+      .votes div {
+        font-size: 1.2em; } }
 
 .result_col {
   text-align: center;
-  padding: 20px; }
+  padding: 0; }
 
 .winner {
   border-radius: 12px;
@@ -285,16 +320,20 @@ a, a:visited {
   font-weight: 300;
   font-size: 2.5em;
   display: none;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif;
   margin: 0; }
   @media only screen and (max-device-width: 320px) {
     .score_header {
       font-size: 1.4em; } }
 
 .leaderboard {
-  display: none; }
+  display: none;
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif; }
   .leaderboard .item {
     text-align: center; }
+    @media only screen and (max-device-width: 320px) {
+      .leaderboard .item {
+        margin-top: 10px; } }
     .leaderboard .item a.leader_img {
       display: block;
       text-decoration: none;
@@ -309,9 +348,9 @@ a, a:visited {
       font-size: 1.1em;
       font-weight: bold;
       text-decoration: none;
-      color: white; }
+      color: black; }
       .leaderboard .item a.leader_handle:visited, .leaderboard .item a.leader_handle:visited:visited {
-        color: white; }
+        color: black; }
     .leaderboard .item .stats {
       display: block;
       font-size: 1.4em;
@@ -320,9 +359,10 @@ a, a:visited {
 
 .leaderboard_header {
   font-size: 2em;
-  font-weight: 300;
-  color: #fff;
-  display: none; }
+  font-weight: 500;
+  color: #000;
+  display: none;
+  text-transform: uppercase; }
   @media only screen and (max-device-width: 320px) {
     .leaderboard_header {
       font-size: 1em; } }
@@ -338,6 +378,31 @@ a, a:visited {
   @media only screen and (max-device-width: 320px) {
     .see_winners {
       font-size: 0.8em; } }
+
+.view_ig {
+  border: 5px solid #3f729b;
+  color: #3f729b;
+  background: none;
+  text-transform: uppercase;
+  font-size: 16px;
+  padding: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  display: block;
+  width: 306px;
+  margin: 0 auto;
+  letter-spacing: 0.1em; }
+  @media only screen and (max-device-width: 320px) {
+    .view_ig {
+      font-size: 8px;
+      width: 140px;
+      padding: 4px;
+      border: 3px solid #3f729b; } }
+  .view_ig:hover {
+    color: #000;
+    border-color: #000; }
+  .view_ig:visited {
+    color: #3f729b; }
 
 .ig-b- {
   display: block;

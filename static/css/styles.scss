@@ -1,6 +1,7 @@
-$basefont: Helvetica, Arial, sans-serif;
+$basefont: 'proxima-nova', Helvetica, Arial, sans-serif;
 $emerald: #2ecc71;
 $fgcolor: $emerald;
+$igcolor: #3f729b;
 
 @mixin bw {
 	// TODO add browser decl
@@ -26,10 +27,18 @@ $fgcolor: $emerald;
 	box-sizing: border-box;
 }
 
-body {
+body
+{
 	padding: 0;
 	margin: 0;
 	width: 100%;
+	font-family: $basefont;
+}
+
+.pure-g [class *= "pure-u"],
+.pure-g-r [class *= "pure-u"] {
+    /* Set you're content font stack here: */
+    font-family: $basefont !important;
 }
 
 a, a:visited {
@@ -42,6 +51,13 @@ a, a:visited {
 	a, a:visited {
 		color: #000;
 		text-decoration: none;
+		font-size: 2.5em;
+		font-weight: 200;
+		color: $fgcolor;
+		
+		@media only screen and (max-device-width: 320px) {
+			font-size: 1.5em;
+		}
 	}
 }
 
@@ -187,6 +203,7 @@ a, a:visited {
 	font-weight: bold;
 	padding: 15px;
 	margin: 30px auto;
+	font-family: $basefont;
 	&:hover {
 		color: #000;
 		border: 5px solid #000;
@@ -311,15 +328,18 @@ $footer_fontsize: 2em;
 
 .score {
 	width: 100%;
-	padding: 20px 60px 20px 60px;
+	padding: 0;
 	background: none;
 	border-top: 3px solid $fgcolor;
 	border-bottom: 3px solid $fgcolor;
 	display: none;
 	font-family: $basefont;
-	@media only screen and (max-device-width: 320px) {
-		padding: 20px 5px 20px 5px;
-	}
+}
+
+.result_content {
+	margin: 20px 60px 20px 20px;
+	padding: 20px 0;
+	width: 90%;
 }
 
 $results_dim: 150px;
@@ -347,25 +367,48 @@ $results_dim: 150px;
 .thumbData {
 	text-align: left;
 	display: inline-block;
-	height: 50px;
+	height: 86px;
+	margin-top: -10px auto;
+	@media only screen and (max-device-width: 320px) {
+		margin: 0 auto;
+		height: 56px;
+		padding: 0 10px;
+	}
 }
-.thumbUser {
+.thumbUser, .thumbUser:visited {
 	height: $results_dim/2;
 	font-size: 1.1em;
+	color: #3f729b;
+	
+	@media only screen and (max-device-width: 320px) {
+		font-size: 0.8em;
+	}
 }
 
 .votes {
-	font-size: 1.1em;
-	height: 15px;
+	font-size: 2em;
+	height: 65px;
+	font-weight: 300;
+
+	@media only screen and (max-device-width: 320px) {
+		font-size: 1.2em;
+		height: 35px;
+	}
 
 	div {
 		display: inline-block;
+		font-weight: 400;
+		font-size: 2em;
+		
+		@media only screen and (max-device-width: 320px) {
+			font-size: 1.2em;
+		}
 	}
 }
 
 .result_col {
 	text-align: center;
-	padding: 20px;
+	padding: 0;
 }
 
 .winner {
@@ -384,16 +427,22 @@ $results_dim: 150px;
 	@media only screen and (max-device-width: 320px) {
 		font-size: 1.4em;
 	}
+
+
 }
 
 $leader-dim: 150px;
-$username-color: #fff;
+$username-color: #000;
 $stats-color: #fff;
 
 .leaderboard {
 	display: none;
+	font-family: $basefont;
 	.item {
 		text-align: center;
+		@media only screen and (max-device-width: 320px) {
+			margin-top: 10px;
+		}
 		a.leader_img {
 			display: block;
 			text-decoration: none;
@@ -427,10 +476,10 @@ $stats-color: #fff;
 
 .leaderboard_header {
 	font-size: 2em;
-	font-weight: 300;
-	color: #fff;
+	font-weight: 500;
+	color: #000;
 	display: none;
-
+	text-transform: uppercase;
 	@media only screen and (max-device-width: 320px) {
 		font-size: 1em;
 	}
@@ -451,6 +500,36 @@ $stats-color: #fff;
 	}
 }
 
+.view_ig {
+	border: 5px solid $igcolor;
+	color: $igcolor;
+	background: none;
+	text-transform: uppercase;
+	font-size: 16px;
+	padding: 10px;
+	text-decoration: none;
+	font-weight: 600;
+	display: block;
+	width: 306px;
+	margin: 0 auto;
+	letter-spacing: 0.1em;
+
+	@media only screen and (max-device-width: 320px) {
+		font-size: 8px;
+		width: 140px;
+		padding: 4px;
+		border: 3px solid $igcolor;
+	}
+
+	&:hover {
+		color: #000;
+		border-color: #000;
+	}
+
+	&:visited {
+		color: $igcolor;
+	}
+}
 
 .ig-b- { 
 	display:  block; 
