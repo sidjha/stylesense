@@ -1,10 +1,10 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
-from parse import Media, Parse, Rating, get_new_player
+from parse import Media, Parse, Rating, Skip, get_new_player
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
 from rating import hot
-from apputils import LinkedRand
+from apputils import LinkedRand, verify_form_field, fetch_or_initialize_class, parse_save_batch_objects
 
 import ast, urllib, urllib2, os, urlparse, time
 
@@ -58,6 +58,38 @@ def logged_in():
         session['user'] = user
 
     return render_template('join.html', user=session['user'])
+
+
+@app.route("/skip_round", methods=['POST'])
+def skip_round():
+  photo1 = 'photo1'
+  photo2 = 'photo2'
+
+  try:
+    photo1 = verify_form_field(photo1, request)
+    photo2 = verify_form_field(photo2, request)
+  except ValueError:
+    return json.dumps({"errorMsg": "Invalid form data"}), 400
+
+  try:
+    photo1 = Media.Query.get(objectId=photo1)
+    photo2 = Media.Query.get(objectId=photo2)
+  except QueryResourceDoesNotExist:
+    return json.dumps({"errorMsg": "Invalid photo data"}), 400
+
+  # update skip counters
+  skip1 = fetch_or_initialize_class(Skip, photo1.objectId)
+  skip2 = fetch_or_initialize_class(Skip, photo2.objectId)
+
+  for skip in [skip1, skip2]:
+    if not skip.objectId:
+      skip.skips = 1
+    else:
+      skip.skips += 1
+
+  parse_save_batch_objects([skip1, skip2])
+
+  return json.dumps({"success": True}), 200
 
 
 @app.route("/tally_round", methods=['POST'])

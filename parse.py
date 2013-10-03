@@ -34,6 +34,11 @@ class Parse:
     register(PARSE_APPLICATION_ID, PARSE_REST_API_KEY)
 
 
+# Stores skipping information
+class Skip(Object):
+  pass
+
+
 # Stores rating information
 class Rating(Object):
   pass
