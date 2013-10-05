@@ -1,9 +1,10 @@
-from parse import Media, Skip
+from parse import Media, Skip, Rating
 from app import parse
 import datetime
 
+QUERY_SIZE = 5
+
 def most_skipped():
-	QUERY_SIZE = 5
 	mostskipped = Skip.Query.all().limit(QUERY_SIZE).order_by("-skips")
 	skipped_media = []
 	for item in mostskipped:
@@ -24,7 +25,6 @@ def most_skipped():
 	return skipped_media
 
 def most_wins():
-	QUERY_SIZE = 5
 	mostwins = Media.Query.all().limit(5).order_by('-wins')
 
 	print "Pictures with most wins (descending)"
@@ -39,7 +39,6 @@ def most_wins():
 	return mostwins
 
 def most_losses():
-	QUERY_SIZE = 5
 	mostlosses = Media.Query.all().limit(5).order_by('-losses')
 
 	print "Pictures with most losses (descending)"
@@ -53,6 +52,27 @@ def most_losses():
 	
 	return mostlosses
 
+def top_rated():
+	toprated = Rating.Query.all().limit(5).order_by('-rating')
+
+	print "Top rated pictures (descending)"
+	for i in range(0,20):
+		print "-",
+	print "\r"
+
+	photoIds = []
+	for rating in toprated:
+		photoId = {}
+		photoId['id'] = rating.mediaId
+		photoId['rating'] = rating.rating
+		photoIds.append(photoId)
+
+	for photoId in photoIds:
+		photo = Media.Query.get(objectId=photoId['id'])
+		print photoId['rating'], ": ", photo.link, " by ", photo.username
+
+	return photoIds
+
 if __name__ == '__main__':
 	for i in range(0,20):
 		print "-",
@@ -62,7 +82,9 @@ if __name__ == '__main__':
 		print "-",
 	print "\r"
 
+	top_rated()
 	most_skipped()
 	most_wins()
 	most_losses()
+
 	print "\r"
