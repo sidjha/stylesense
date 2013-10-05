@@ -1,5 +1,6 @@
 from parse import Media, Skip
 from app import parse
+import datetime
 
 def most_skipped():
 	QUERY_SIZE = 5
@@ -56,7 +57,7 @@ if __name__ == '__main__':
 	for i in range(0,20):
 		print "-",
 	print "\r"
-	print "STYLESENSE STATS FOR TODAY"
+	print "STYLESENSE STATS FOR %s" % datetime.date.today()
 	for i in range(0,20):
 		print "-",
 	print "\r"
