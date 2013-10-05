@@ -66,7 +66,8 @@ def poll():
 
     if media.followers < FOLLOWER_THRESHOLD:
       continue
-    elif 'ootd' not in media.tags:
+
+    if 'ootd' not in media.caption.lower():
       continue
 
     if not media.exists():
