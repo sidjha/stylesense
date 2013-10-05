@@ -6,6 +6,7 @@ from parse_rest.connection import ParseBatcher
 import time
 
 FOLLOWER_THRESHOLD = 200
+HASHTAGS_THRESHOLD = 15
 
 api = None
 parse = None
@@ -66,7 +67,11 @@ def poll():
 
     if media.followers < FOLLOWER_THRESHOLD:
       continue
-    elif 'ootd' not in media.tags:
+
+    if len(media.tags) > HASHTAGS_THRESHOLD:
+      continue
+
+    if 'ootd' not in media.caption.lower():
       continue
 
     if not media.exists():
