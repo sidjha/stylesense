@@ -65,6 +65,29 @@
     this.losses = player.losses;
   }
 
+  function img_error(image) {
+    var badPlayer;
+
+    if (cur_round.player1.image_url === image.src) {
+      badPlayer = cur_round.player1;
+    } else if (cur_round.player2.image_url === image.src) {
+      badPlayer = cur_round.player2;
+    } else {
+      new_round();
+      return;
+    }
+
+    $.ajax({
+      url: '/report_bad_image',
+      method: 'POST',
+      data: {
+        objectId: badPlayer.obj_id
+      }
+    });
+
+    new_round();
+  }
+
   function new_round() {
     $.ajax({
       url: '/new_round',

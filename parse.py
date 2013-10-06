@@ -34,6 +34,11 @@ class Parse:
     register(PARSE_APPLICATION_ID, PARSE_REST_API_KEY)
 
 
+# Saves photos that have been repoted (i.e., they don't work)
+class ReportedMedia(Object):
+  pass
+
+
 # Stores skipping information
 class Skip(Object):
   pass

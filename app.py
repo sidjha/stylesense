@@ -1,7 +1,7 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
 from flask.ext.assets import Environment, Bundle
-from parse import Media, Parse, Rating, Skip, get_new_player
+from parse import Media, Parse, Rating, Skip, ReportedMedia, get_new_player
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
 from rating import hot
@@ -100,6 +100,34 @@ def skip_round():
   except Exception as e:
     print e
     return json.dumps({"errorMsg": "Votes could not be saved."}), 400
+
+  return json.dumps({"success": True}), 200
+
+
+
+@app.route("/report_bad_image", methods=['POST'])
+def report_bad_image():
+  bad_photo = 'objectId'
+
+  try:
+    bad_photo = verify_form_field(bad_photo, request)
+  except ValueError:
+    return json.dumps({"errorMsg": "Invalid form data"}), 400
+
+  try:
+    bad_photo = Media.Query.get(objectId=bad_photo)
+  except QueryResourceDoesNotExist:
+    return json.dumps({"errorMsg": "Invalid photo data"}), 400
+
+  report = fetch_or_initialize_class(ReportedMedia, bad_photo.objectId)
+
+  if report.objectId:
+    report.reports += 1
+  else:
+    report.reports = 1
+    report.mediaId = bad_photo.objectId
+
+  report.save()
 
   return json.dumps({"success": True}), 200
 
