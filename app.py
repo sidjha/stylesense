@@ -32,7 +32,7 @@ GRANT_TYPE = 'authorization_code'
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return redirect('http://stylesen.se', 301)
 
 
 @app.route('/igram_oauth_callback')
