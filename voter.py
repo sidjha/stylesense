@@ -29,7 +29,7 @@ def run_bot():
   photos = []
 
   count = Media.Query.all().count()
-  dataset_size = int(count*0.05)
+  dataset_size = int(count*0.1)
 
   randint = LinkedRand(count)
   rand = randint()
@@ -38,12 +38,13 @@ def run_bot():
   print "Dataset size: %d, trying to fetch %d random photos" % (count, dataset_size)
 
   for photo in dataset:
-    randint = LinkedRand(2)
+    randint = LinkedRand(11)
     rand = randint()
-    if rand == 0:
-      photo.wins = photo.wins + 1
+    if any(rand == x for x in range(10)):
+      photo.wins = photo.wins + 10
     else:
-      photo.losses = photo.losses + 1
+      if photo.losses != 0 and photo.wins / photo.losses < 0.5:
+        photo.losses = photo.losses + 5
     photos.append(photo)
 
 
@@ -58,6 +59,7 @@ def run_bot():
 
   print "Processing ratings chunks..."
   process_parse_saving_in_chunks(ratings)
+
 
 
 if __name__ == "__main__":
