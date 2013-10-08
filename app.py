@@ -1,7 +1,7 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
 from flask.ext.assets import Environment, Bundle
-from parse import Media, Parse, Rating, Skip, get_new_player, weeks_media_count
+from parse import Media, Parse, Rating, Skip, get_new_player
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
 from rating import hot
@@ -185,7 +185,8 @@ def get_leaderboard():
 def get_new_players():
     """ Returns a list containing two new players """
     # Get num of photos taken since timestamp
-    this_weeks_count = weeks_media_count(last_monday())
+    timestamp = last_monday()
+    this_weeks_count = Media.Query.filter(createdAt__gte=timestamp).count()
 
     # Determine the latest 'index'
     most_recent = Media.Query.all().order_by('-createdAt').limit(1)

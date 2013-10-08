@@ -1,6 +1,7 @@
 from parse import Media, Parse, Rating, get_new_player
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
+from parse_rest.datatypes import Date
 from datetime import datetime, timedelta
 
 import random
@@ -34,11 +35,12 @@ def verify_form_field(field_id, request):
       raise ValueError("Invalid data");
 
 def last_monday():
-  """ Returns last Monday as a UTC ISO 8601 timestamp with millisecond precision """
+  """ Returns last Monday in UTC ISO 8601 formatted JSON object """
   today = datetime.utcnow()
-  last_monday = today - timedelta(days=today.weekday())
-  timestamp = last_monday.strftime('%Y-%m-%dT%H:%M:%S.') + last_monday.strftime('%f')[:3] + 'Z'
-  return timestamp
+  mon = today - timedelta(days=today.weekday())
+  date_mon = Date(mon)
+  ts = date_mon._to_native()
+  return ts
 
 class LinkedRand(object):
   def __init__(self, count, start=0):
