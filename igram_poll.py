@@ -3,7 +3,7 @@ from instagram.client import InstagramAPI
 from parse import Media, Parse
 from parse_rest.connection import ParseBatcher
 
-import time
+import time, sys
 
 FOLLOWER_THRESHOLD = 200
 HASHTAGS_THRESHOLD = 15
@@ -74,11 +74,16 @@ def poll():
     if 'ootd' not in media.caption.lower():
       continue
 
-    if not media.exists():
-      media_list.append(media)
-      print "Media %s queued for save" % n
-      index += 1
-      n += 1
+    try:
+      if not media.exists():
+        media_list.append(media)
+        print "Media %s queued for save" % n
+        index += 1
+        n += 1
+    except Exception as e:
+      print e
+      print "ERROR: item could not be saved"
+      continue
 
   if len(media_list) > 0:
     try:
@@ -98,4 +103,14 @@ if __name__ == "__main__":
   api = InstagramAPI(INSTAGRAM_CLIENT_ID, INSTAGRAM_CLIENT_SECRET)
   parse = Parse()
 
-  poll()
+  loop_count = 1
+
+  # get number of times to run poll() from args
+  if len(sys.argv) == 2:
+    loop_count = int(sys.argv[1])
+
+  for i in xrange(loop_count):
+    print "[%d/%d] Polling IG" % ((i + 1), loop_count)
+    poll()
+
+    time.sleep(5)  # sleep for a few seconds for server to get some new data...
