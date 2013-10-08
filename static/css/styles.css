@@ -12,20 +12,18 @@ body {
   /* Set you're content font stack here: */
   font-family: "proxima-nova", Helvetica, Arial, sans-serif !important; }
 
-a, a:visited {
-  color: red; }
-
 .header {
   width: 100%; }
-  .header a, .header a:visited {
-    color: #000;
-    text-decoration: none;
-    font-size: 2.5em;
-    font-weight: 200;
-    color: #2ecc71; }
-    @media only screen and (max-device-width: 320px) {
-      .header a, .header a:visited {
-        font-size: 1.5em; } }
+
+.logo, .logo:visited {
+  color: #000;
+  text-decoration: none;
+  font-size: 2.5em;
+  font-weight: 200;
+  color: #2ecc71; }
+  @media only screen and (max-device-width: 320px) {
+    .logo, .logo:visited {
+      font-size: 1.5em; } }
 
 .my_stats {
   text-align: right;
@@ -404,6 +402,56 @@ a, a:visited {
     border-color: #000; }
   .view_ig:visited {
     color: #3f729b; }
+
+.flat_button {
+  width: 200px;
+  text-align: center;
+  display: block;
+  border: 5px solid #000;
+  color: #000;
+  text-transform: lowercase;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px;
+  margin: 0;
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif; }
+  .flat_button:hover {
+    color: #000;
+    border: 5px solid #000; }
+  @media only screen and (max-device-width: 320px) {
+    .flat_button {
+      width: 100px; } }
+
+.twitter-share-button {
+  display: inline-block;
+  font-size: 1.2em;
+  width: 100px;
+  color: #000;
+  border: 3px solid #000; }
+  .twitter-share-button:hover {
+    color: #00acee !important;
+    border: 3px solid #00acee; }
+  @media only screen and (max-device-width: 320px) {
+    .twitter-share-button {
+      width: 70px;
+      font-size: 0.9em; } }
+
+.fb_share_button {
+  display: inline-block;
+  font-size: 1.2em;
+  width: 100px;
+  color: #000;
+  border: 3px solid #000; }
+  .fb_share_button:hover {
+    color: #3b5998 !important;
+    border: 3px solid #3b5998; }
+  @media only screen and (max-device-width: 320px) {
+    .fb_share_button {
+      width: 70px;
+      font-size: 0.9em; } }
+
+.share_col {
+  text-align: right; }
 
 .ig-b- {
   display: block;

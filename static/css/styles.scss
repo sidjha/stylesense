@@ -41,23 +41,20 @@ body
     font-family: $basefont !important;
 }
 
-a, a:visited {
-	color: red;
-}
 
 .header {
 	width: 100%;
+}
 
-	a, a:visited {
-		color: #000;
-		text-decoration: none;
-		font-size: 2.5em;
-		font-weight: 200;
-		color: $fgcolor;
-		
-		@media only screen and (max-device-width: 320px) {
-			font-size: 1.5em;
-		}
+.logo, .logo:visited {
+	color: #000;
+	text-decoration: none;
+	font-size: 2.5em;
+	font-weight: 200;
+	color: $fgcolor;
+	
+	@media only screen and (max-device-width: 320px) {
+		font-size: 1.5em;
 	}
 }
 
@@ -530,6 +527,65 @@ $stats-color: #fff;
 	&:visited {
 		color: $igcolor;
 	}
+}
+
+.flat_button {
+	$width: 200px;
+	width: $width;
+	text-align: center;
+	display: block;
+	border: 5px solid #000;
+	color: #000;
+	text-transform: lowercase;
+	text-decoration: none;
+	font-weight: bold;
+	padding:5px;
+	margin: 0;
+	font-family: $basefont;
+
+	&:hover {
+		color: #000;
+		border: 5px solid #000;
+	}
+	@media only screen and (max-device-width: 320px) {
+		width: $width/2;
+	}
+}
+
+.twitter-share-button {
+	display: inline-block;
+	font-size: 1.2em;
+	width: 100px;
+	color: #000;
+	border: 3px solid #000;
+	&:hover {
+		color: #00acee !important;
+		border: 3px solid #00acee;
+	}
+	@media only screen and (max-device-width: 320px) {
+		width: 70px;
+		font-size: 0.9em;
+	}
+}
+
+.fb_share_button {
+	display: inline-block;
+	font-size: 1.2em;
+	width: 100px;
+	color: #000;
+	border: 3px solid #000;
+	&:hover {
+		color: #3b5998 !important;
+		border: 3px solid #3b5998;
+	}
+	@media only screen and (max-device-width: 320px) {
+		width: 70px;
+		font-size: 0.9em;
+	}
+}
+
+.share_col {
+	text-align: right;
 }
 
 .ig-b- { 
