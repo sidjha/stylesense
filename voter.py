@@ -41,10 +41,10 @@ def run_bot():
     randint = LinkedRand(11)
     rand = randint()
     if any(rand == x for x in range(10)):
-      photo.wins = photo.wins + 10
+      photo.wins = photo.wins + 1
     else:
       if photo.losses != 0 and photo.wins / photo.losses < 0.5:
-        photo.losses = photo.losses + 5
+        photo.losses = photo.losses + 1
     photos.append(photo)
 
 
