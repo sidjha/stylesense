@@ -1,10 +1,10 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
 from flask.ext.assets import Environment, Bundle
-from parse import Media, Parse, Rating, Skip, get_new_player
+from parse import Media, Parse, Rating, Skip, get_new_player, get_new_player_by_id
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
-from rating import hot
+from rating import hot, HOT_THRESHOLDS
 from apputils import LinkedRand, verify_form_field, fetch_or_initialize_class, parse_save_batch_objects
 
 import ast, urllib, urllib2, os, urlparse, time
@@ -28,7 +28,6 @@ INSTAGRAM_CLIENT_SECRET = '7a2040afd3044962a636ac001be5f5a2'
 REDIRECT_URI_DEV = 'http://127.0.0.1:5000/igram_oauth_callback'
 REDIRECT_URI_PROD = 'http://desolate-woodland-8107.herokuapp.com/igram_oauth_callback'
 GRANT_TYPE = 'authorization_code'
-
 
 @app.route('/')
 def home():
@@ -157,7 +156,8 @@ def tally_round():
 
 @app.route("/new_round")
 def new_round():
-    new_players = get_new_players()
+    #new_players = get_new_players()
+    new_players = new_round_photos()
     players = []
 
     for player in new_players:
@@ -184,6 +184,7 @@ def get_leaderboard():
 
 def get_new_players():
     """ Returns a list containing two new players """
+
     most_recent = Media.Query.all().order_by('-createdAt').limit(1)
 
     if not most_recent.exists():
@@ -193,6 +194,7 @@ def get_new_players():
 
     for obj in most_recent:
         index = obj.index + 1
+
 
     count = index
     randint = LinkedRand(count)
@@ -208,13 +210,60 @@ def get_new_players():
     return [player1, player2]
 
 
+def new_round_photos():
+
+  hottest = Rating.Query.all().order_by('-rating').limit(1)
+
+  # Assume current highest rated object has a rating of 95%
+  for obj in hottest:
+    max_rating = obj.rating / 0.95
+
+  # Categorize into sets based on hotness
+  photosets = []
+  photosets.append(Rating.Query.filter(rating__gte=HOT_THRESHOLDS['TOP']*max_rating))
+  photosets.append(Rating.Query.filter(rating__lt=HOT_THRESHOLDS['TOP']*max_rating, 
+    rating__gte=HOT_THRESHOLDS['GOOD']*max_rating))
+  photosets.append(Rating.Query.filter(rating__lt=HOT_THRESHOLDS['GOOD']*max_rating,
+    rating__gte=HOT_THRESHOLDS['AVERAGE']*max_rating))
+  photosets.append(Rating.Query.filter(rating__lt=HOT_THRESHOLDS['AVERAGE']*max_rating,
+    rating__gte=HOT_THRESHOLDS['PASS']*max_rating))
+  photosets.append(Rating.Query.filter(rating__lt=HOT_THRESHOLDS['PASS']*max_rating))
+
+  # Pick two random sets
+  rands = LinkedRand(5)
+  rand1 = rands()
+  rand2 = rands()
+
+  photos1 = []
+  for photo in photosets[rand1]:
+    photos1.append(photo)
+
+  photos2 = []
+  for photo in photosets[rand2]:
+    photos2.append(photo)
+
+  # Pick random objects from the sets
+  rands = LinkedRand(len(photos1))
+  rand = rands()
+  rating1 = photos1[rand]
+
+  rands = LinkedRand(len(photos2))
+  rand = rands()
+  rating2 = photos2[rand]
+
+  # Get the associated Media objects
+  player1 = get_new_player_by_id(rating1.mediaId)
+  player2 = get_new_player_by_id(rating2.mediaId)
+
+  return [player1, player2]
+
 @app.route("/test/rating")
 def rating():
     return render_template('ratingtest.html')
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 7000))
     app.debug = True
     app.run(host='0.0.0.0', port=port)
     parse = Parse()

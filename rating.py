@@ -3,6 +3,13 @@ from math import log
 
 epoch = datetime(1970, 1, 1)
 
+HOT_THRESHOLDS = {
+  'TOP': 0.8,
+  'GOOD': 0.7,
+  'AVERAGE': 0.6,
+  'PASS': 0.5
+}
+
 def _epoch_seconds(date):
   """Returns the number of seconds from the epoch to date."""
   td = date - epoch

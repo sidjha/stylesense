@@ -28,6 +28,25 @@ def get_new_player(index):
   return result['results'][0]
 
 
+def get_new_player_by_id(index):
+  connection = httplib.HTTPSConnection('api.parse.com', 443)
+  params = urllib.urlencode({"keys": "lowResolutionUrl,username,link,wins,losses",
+            "where": json.dumps({
+              "objectId": index
+            }
+          )})
+
+  connection.connect()
+  connection.request('GET', '/1/classes/Media?%s' % params, '', {
+        "X-Parse-Application-Id": PARSE_APPLICATION_ID,
+        "X-Parse-REST-API-Key": PARSE_REST_API_KEY,
+      })
+
+  result = json.loads(connection.getresponse().read())
+
+  return result['results'][0]
+
+
 # Used to connect to Parse
 class Parse:
   def __init__(self):
