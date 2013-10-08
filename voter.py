@@ -1,6 +1,6 @@
 from parse import Media, Parse, Rating
 from app import parse
-from apputils import LinkedRand, parse_save_batch_objects, fetch_or_initialize_class
+from apputils import LinkedRand, parse_save_batch_objects, fetch_or_initialize_class, last_monday
 from rating import hot
 
 BATCH_REQUEST_LIMIT = 50
@@ -28,14 +28,21 @@ def process_parse_saving_in_chunks(l):
 def run_bot():
   photos = []
 
-  count = Media.Query.all().count()
-  dataset_size = int(count*0.1)
+  this_week = Media.Query.filter(createdAt__gte=last_monday())
+  this_week_count = this_week.count()
 
-  randint = LinkedRand(count)
+  most_recent = this_week.order_by('-createdAt').limit(1)
+  latest_index = 0
+  for obj in most_recent:
+      latest_index = obj.index + 1
+  print "index: ", latest_index
+  dataset_size = int(this_week_count*0.1)
+  randint = LinkedRand(latest_index, this_week_count - latest_index)
   rand = randint()
-  dataset = Media.Query.all().skip(rand).limit(dataset_size)
+  print "rand: ", rand
+  dataset = this_week.skip(rand).limit(dataset_size)
 
-  print "Dataset size: %d, trying to fetch %d random photos" % (count, dataset_size)
+  print "Dataset size: %d, trying to fetch %d random photos" % (this_week_count, dataset_size)
 
   for photo in dataset:
     randint = LinkedRand(11)
