@@ -117,7 +117,7 @@ def tally_round():
     except ValueError:
       return json.dumps({"errorMsg": "Invalid form data"}), 400
 
-    print photo1, photo2, winner
+    # print photo1, photo2, winner
 
     # verify that media exists
     try:
@@ -173,7 +173,7 @@ def new_round():
                       'wins': wins,
                       'losses': losses})
 
-    print "players: ", players[0]['objectId'], players[1]['objectId']
+    #print "players: ", players[0]['objectId'], players[1]['objectId']
     return json.dumps(players)
 
 
