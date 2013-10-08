@@ -1,11 +1,12 @@
 from __future__ import division
 from flask import Flask, request, render_template, json, url_for, redirect, session
 from flask.ext.assets import Environment, Bundle
-from parse import Media, Parse, Rating, Skip, get_new_player
+from parse import Media, Parse, Rating, Skip, get_new_player, weeks_media_count
 from parse_rest.connection import ParseBatcher
 from parse_rest.query import QueryResourceDoesNotExist
 from rating import hot
 from apputils import LinkedRand, verify_form_field, fetch_or_initialize_class, parse_save_batch_objects
+from datetime import datetime, timedelta
 
 import ast, urllib, urllib2, os, urlparse, time
 
@@ -184,18 +185,28 @@ def get_leaderboard():
 
 def get_new_players():
     """ Returns a list containing two new players """
-    most_recent = Media.Query.all().order_by('-createdAt').limit(1)
+    
+    # Convert last Monday into UTC ISO 8601 timestamp with millisecond precision
+    today = datetime.utcnow()
+    last_monday = today - timedelta(days=today.weekday())
+    timestamp = last_monday.strftime('%Y-%m-%dT%H:%M:%S.') + last_monday.strftime('%f')[:3] + 'Z'
 
+    # Get num of photos taken since timestamp
+    this_weeks_count = weeks_media_count(timestamp)
+    this_weeks_count = this_weeks_count['count']
+
+    # Determine the latest 'index'
+    most_recent = Media.Query.all().order_by('-createdAt').limit(1)
     if not most_recent.exists():
         return
-
     index = 0
-
     for obj in most_recent:
         index = obj.index + 1
 
+    # Pick randomly from only this week's photos
     count = index
-    randint = LinkedRand(count)
+    start = count - this_weeks_count
+    randint = LinkedRand(count, count - this_weeks_count)
     rand1 = randint()
     rand2 = randint()
 

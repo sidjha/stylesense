@@ -34,13 +34,14 @@ def verify_form_field(field_id, request):
 
 
 class LinkedRand(object):
-  def __init__(self, count):
+  def __init__(self, count, start=0):
     self.last = None
     self.count = count
+    self.start = start
 
   def __call__(self):
-    r = random.randint(0, self.count - 1)
+    r = random.randint(self.start, self.count - 1)
     while r == self.last:
-      r = random.randint(0, self.count - 1)
+      r = random.randint(self.start, self.count - 1)
     self.last = r
     return r

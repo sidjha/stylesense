@@ -28,6 +28,29 @@ def get_new_player(index):
   return result['results'][0]
 
 
+def weeks_media_count(timestamp):
+  connection = httplib.HTTPSConnection('api.parse.com', 443)
+  params = urllib.urlencode({"keys": "index",
+            "where": json.dumps({
+              "createdAt": {"$gt": {
+                              "__type": "Date",
+                              "iso": timestamp
+                              }
+                            }
+              }), "count": 1, "limit": 0
+          })
+
+  connection.connect()
+  connection.request('GET', '/1/classes/Media?%s' % params, '', {
+        "X-Parse-Application-Id": PARSE_APPLICATION_ID,
+        "X-Parse-REST-API-Key": PARSE_REST_API_KEY,
+      })
+
+  result = json.loads(connection.getresponse().read())
+
+  return result
+
+
 # Used to connect to Parse
 class Parse:
   def __init__(self):
