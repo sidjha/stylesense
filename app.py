@@ -193,7 +193,6 @@ def get_new_players():
 
     # Get num of photos taken since timestamp
     this_weeks_count = weeks_media_count(timestamp)
-    this_weeks_count = this_weeks_count['count']
 
     # Determine the latest 'index'
     most_recent = Media.Query.all().order_by('-createdAt').limit(1)

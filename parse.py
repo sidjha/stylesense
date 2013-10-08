@@ -48,7 +48,7 @@ def weeks_media_count(timestamp):
 
   result = json.loads(connection.getresponse().read())
 
-  return result
+  return result['count']
 
 
 # Used to connect to Parse
