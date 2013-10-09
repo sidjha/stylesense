@@ -193,9 +193,8 @@
   function Leader(attributes) {
   	this.img_url = attributes['img_url'];
   	this.link_ = attributes['link'];
-  	this.losses = attributes['losses'];
   	this.username = attributes['username'];
-  	this.wins = attributes['wins'];
+  	this.net_votes = attributes['net_votes'];
   }
 
   function update_leaderboard() {
@@ -213,13 +212,12 @@
   	for(var i=0; i < leaders.length; i++) {
   		var handle = leaders[i].username;
   		var link = leaders[i].link_;
-  		var losses = leaders[i].losses;
-  		var wins = leaders[i].wins;
+  		var net_votes = leaders[i].net_votes;
   		var img_url = leaders[i].img_url;
   		li = '<a class="leader_img" href="' + link + '" target="_blank"><img src="' + img_url + '"></a>' +
   			 '<a class="leader_handle" href="http://instagram.com/' + 
   			 handle + '" target="_blank">@' + handle + '</a>' + 
-  			 '<span class="stats">' + wins + 'w / ' + losses + 'l</span>';
+  			 '<span class="stats">' + net_votes + ' points</span>';
   		$('#leaderboard').append('<div class="pure-u-1-5 item">' + li + '</div>');
   	}
   	$('#copyright').css('margin-top', '50px');

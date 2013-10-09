@@ -209,7 +209,7 @@ def new_round():
 
 @app.route("/leaderboard")
 def get_leaderboard():
-    leaders = leaderboard.get_leaderboard(5)
+    leaders = leaderboard.get_leaderboard()
     return json.dumps(leaders)
 
 def get_new_players():
