@@ -5,3 +5,4 @@ stylsns_env/
 static/.webassets-cache/
 jsmin.js
 cssmin.css
+.env
