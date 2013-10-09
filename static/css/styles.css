@@ -426,11 +426,11 @@ body {
   display: inline-block;
   font-size: 1.2em;
   width: 100px;
-  color: #000;
-  border: 3px solid #000; }
+  color: #00acee;
+  border: 3px solid #00acee; }
   .twitter-share-button:hover {
-    color: #00acee !important;
-    border: 3px solid #00acee; }
+    color: #000 !important;
+    border: 3px solid #000; }
   @media only screen and (max-device-width: 320px) {
     .twitter-share-button {
       width: 70px;
@@ -440,11 +440,11 @@ body {
   display: inline-block;
   font-size: 1.2em;
   width: 100px;
-  color: #000;
-  border: 3px solid #000; }
+  color: #3b5998;
+  border: 3px solid #3b5998; }
   .fb_share_button:hover {
-    color: #3b5998 !important;
-    border: 3px solid #3b5998; }
+    color: #000 !important;
+    border: 3px solid #000; }
   @media only screen and (max-device-width: 320px) {
     .fb_share_button {
       width: 70px;
