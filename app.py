@@ -168,6 +168,9 @@ def tally_round():
       photo2.wins += 1
       photo1.losses += 1
 
+    photo1.netVotes = photo1.wins - photo1.losses
+    photo2.netVotes = photo2.wins - photo2.losses
+
     # update score of winner and loser
     rating1.rating = hot(photo1.wins, photo1.losses, photo1.createdAt)
     rating2.rating = hot(photo2.wins, photo2.losses, photo2.createdAt)

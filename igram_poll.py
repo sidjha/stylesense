@@ -59,6 +59,7 @@ def poll():
                              'losses': 0,
                              'lowResolutionUrl': obj.images['low_resolution'].url,
                              'mediaCreatedTime': obj.created_time,
+                             'netVotes': 0,
                              'standardResolutionUrl': obj.get_standard_resolution_url(),
                              'tags': obj.tags,
                              'username': obj.user.username,

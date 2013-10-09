@@ -52,6 +52,8 @@ def run_bot():
     else:
       if photo.losses != 0 and photo.wins / photo.losses < 0.5:
         photo.losses = photo.losses + 1
+
+    photo.netVotes = photo.wins - photo.losses
     photos.append(photo)
 
 
