@@ -1,5 +1,16 @@
-import numpy
 import json
+
+def median(l):
+  n = len(l)
+
+  sorted_l = sorted(l)
+  mid = n / 2
+
+  if n % 2 == 0:
+    return (sorted_l[mid - 1] + sorted_l[mid]) / 2.0
+  else:
+    return sorted_l[mid]
+
 
 def hashtags_distribution(data):
   """Displays the distribution of hashtag count to number of photos"""
@@ -34,7 +45,7 @@ def hashtags_distribution(data):
 
   print "Total rows: %d" % n
   print "Average # of hashtags: %d" % avg
-  print "Median # of hashtags: %d" % numpy.median(hashtag_counts)
+  print "Median # of hashtags: %d" % median(hashtag_counts)
 
 if __name__ == "__main__":
   # get a JSON dump of data to avoid doing thousands of Parse queries
