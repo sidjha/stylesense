@@ -37,9 +37,14 @@ def verify_form_field(field_id, request):
 def last_monday():
   """ Returns last Monday in UTC ISO 8601 formatted JSON object """
   today = datetime.utcnow()
+
+  # get monday at midnight
   mon = today - timedelta(days=today.weekday())
+  mon = mon.replace(hour=0, minute=0, second=0, microsecond=0)
+
   date_mon = Date(mon)
   ts = date_mon._to_native()
+
   return ts
 
 class LinkedRand(object):
