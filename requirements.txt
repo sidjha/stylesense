@@ -13,4 +13,4 @@ Flask-Assets==0.8
 jsmin==2.0.4
 cssmin==0.1.4
 numpy==1.7.1
-newrelic=2.0.0.1
+newrelic==2.0.0.1
