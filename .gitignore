@@ -1,6 +1,7 @@
 .sass-cache/
 *.pyc
 stylsns_env/
+env/
 .DS_Store
 static/.webassets-cache/
 jsmin.js
