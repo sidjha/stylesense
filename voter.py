@@ -69,6 +69,27 @@ def run_bot():
   print "Processing ratings chunks..."
   process_parse_saving_in_chunks(ratings)
 
+def vote_for_link(link, wins, losses):
+  """Number of wins and losses to add to a given Instagram link"""
+
+  media = None
+
+  try:
+    media = Media.Query.get(link=link)
+  except QueryResourceDoesNotExist:
+    print "Unable to find media with link: %s" % link
+    return
+
+  media.wins += wins
+  media.losses += losses
+  media.netVotes = media.wins - media.losses
+
+  rating = fetch_or_initialize_class(Rating, media.objectId)
+  rating.rating = hot(media.wins, media.losses, media.createdAt)
+
+  process_parse_saving_in_chunks([media, rating])
+
+  print "Done! Wins: %d, Losses: %d, Rating: %f" % (media.wins, media.losses, rating.rating)
 
 
 if __name__ == "__main__":
