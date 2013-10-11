@@ -194,16 +194,13 @@ def new_round():
       image = player['lowResolutionUrl']
       username = player['username']
       link = player['link']
-      wins = player['wins']
-      losses = player['losses']
+
       players.append({'objectId': player['objectId'],
 		      'image': image,
 		      'username': username,
 		      'link': link,
-                      'wins': wins,
-                      'losses': losses})
+		      'netVotes': player['netVotes']})
 
-    #print "players: ", players[0]['objectId'], players[1]['objectId']
     return json.dumps(players)
 
 

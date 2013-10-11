@@ -9,7 +9,7 @@ PARSE_REST_API_KEY = 'ihituXdUkmnFDZaOu1M44FC4GFQ82ryKZkTx6KYO'
 
 def get_new_player(index):
   connection = httplib.HTTPSConnection('api.parse.com', 443)
-  params = urllib.urlencode({"keys": "lowResolutionUrl,username,link,wins,losses",
+  params = urllib.urlencode({"keys": "lowResolutionUrl,username,link,netVotes",
             "where": json.dumps({
               "index": {
                 "$gte": index, "$lte": index

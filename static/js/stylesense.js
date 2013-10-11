@@ -58,11 +58,10 @@
 
   function Player(player) {
     this.image_url = player.image;
-    this.username = player.username;
     this.link_ = player.link;
+    this.net_votes = player.netVotes;
     this.obj_id = player.objectId;
-    this.wins = player.wins;
-    this.losses = player.losses;
+    this.username = player.username;
   }
 
   function img_error(image) {
@@ -96,6 +95,7 @@
         var players = $.parseJSON(data);
         var player1 = new Player(players[0]);
         var player2 = new Player(players[1]);
+
         cur_round = new Round(player1, player2);
         cur_round.render();
       }
@@ -163,6 +163,19 @@
     return false;
   });
 
+  function update_points(points_elem, points) {
+    var text = points_elem.parent().find("[id$='text']");
+    points_elem.html(points);
+
+    console.log("points; " + points);
+
+    if (points == 1) {
+      text.html("point");
+    } else {
+      text.html("points");
+    }
+  }
+
   function show_results() {
   	$('#thumbImg1').attr('src', prev_round.player1.image_url);
   	$('#thumbImg2').attr('src', prev_round.player2.image_url);
@@ -170,20 +183,23 @@
   	$('#thumbLink2').attr('href', prev_round.player2.link_);
   	$('#thumbUser1').html('@' + prev_round.player1.username).attr('href', 'http://instagram.com/' + prev_round.player1.username);
   	$('#thumbUser2').html('@' + prev_round.player2.username).attr('href', 'http://instagram.com/' + prev_round.player2.username);
-  	if (prev_round.winner.obj_id == prev_round.player1.obj_id) {
+
+        var player1_is_winner = (prev_round.winner.obj_id == prev_round.player1.obj_id);
+
+  	if (player1_is_winner) {
   		$('#result2').removeClass('winner');
-  		$('#wins1').html(prev_round.player1.wins + 1);
-  		$('#losses1').html(prev_round.player1.losses);
-  		$('#wins2').html(prev_round.player2.wins);
-  		$('#losses2').html(prev_round.player2.losses + 1);
+
+  		update_points($('#points1'), prev_round.player1.net_votes + 1);
+  		update_points($('#points2'), prev_round.player2.net_votes - 1);
+
   		$('#result1').addClass('winner');
   	}
   	else {
   		$('#result1').removeClass('winner');
-  		$('#wins1').html(prev_round.player1.wins);
-  		$('#losses1').html(prev_round.player1.losses + 1);
-  		$('#wins2').html(prev_round.player2.wins + 1);
-  		$('#losses2').html(prev_round.player2.losses);
+
+  		update_points($('#points2'), prev_round.player2.net_votes + 1);
+  		update_points($('#points1'), prev_round.player1.net_votes - 1);
+
   		$('#result2').addClass('winner');
   	}
   	$('#score-header').fadeIn();
