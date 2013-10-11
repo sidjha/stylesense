@@ -18,12 +18,21 @@
 
 # Press release
 
-We released Stylesense to the world today: www.stylesen.se.
+<journalist name>,
 
-It lets you vote between 2 fashionable Instagrams. Got the idea when I noticed a few of my friends post #OOTD pics regularly, and I wanted to do something more than a mundane 'like' or comment. Stylesense version 1 was built on Wed night of last week by 2 people and we shared it initially with friends to get feedback. Once we got some good feedback, we spent a week refining the app - improved the quality of photos and made the rating algorithm more sophisticated. 
+We just launched Stylesense to the world and it's starting to gain steam. Stylesense lets people pick a winner from 2 Instagram outfits. Right now we do this with the help of the Instagram API by collecting pictures tagged #ootd. When someone visits stylesen.se, they're shown 2 random outfits so that they can pick the one they like better. Our system accumulates the votes, runs a sexy algorithm that factors in time of posting and shows a leader board representing the hottest outfits on Instagram. Once a week, we profile these fashionable people on our Instagram account.
 
-Fashion is cool because it's an expression of yourself. But the idea of pleasing the eye of the observer is fundamental to fashion. If other people are attracted by what you wear, you've succeeded. Everything is relative. And that's what Stylesense's proposition is. We're solving that by crowdsourced outfit comparison. Our mission is to be the world's favourite tool to compare outfits.
+We're from the University of Waterloo (it's in Canada) and we hacked on this project for 3 days. 
 
-We'd like people who care about the intersection of fashion and technology to take a look. Like it? Let us know!
+Without further ado, I urge you to check it out by visiting the first link below. (Be warned, it may reduce your productivity at work!)
 
+Do you want to write about us? I've also appended below a link to screenshots.
+
+URL: www.stylesen.se
 Screenshots: https://www.dropbox.com/sh/2retiuce8ql3asj/RFnTEuPKT4
+
+PS - Thanks  a ton, and definitely reach out if you have further questions via phone, Skype or twitter:
+
+Contact info: sid@sidjha.com, phone: 647-973-1738, twitter: @sidjha, Skype: ss.jha
+
+-Siddharth
