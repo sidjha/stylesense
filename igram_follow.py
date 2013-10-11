@@ -42,11 +42,12 @@ def follow(data, api):
 
     try:
       api.follow_user(user_id=user_id)
-    except Exception:
+    except Exception as e:
       print "Error saving..."
+      print e
       user_ids.add(user_id)
 
-    delay = randint(15, 60)
+    delay = randint(30, 90)
     print "Sleeping for %d seconds" % delay
     sleep(delay)
 
